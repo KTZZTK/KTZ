@@ -4145,22 +4145,9 @@ body::before {
 @media (max-width: 900px) and (orientation: landscape) {
     :root {
         --mobile-taskbar-height: 34px;
-        --mobile-safe-top: env(safe-area-inset-top, 0px);
-        --mobile-safe-bottom: env(safe-area-inset-bottom, 0px);
-        --mobile-safe-left: env(safe-area-inset-left, 0px);
-        --mobile-safe-right: env(safe-area-inset-right, 0px);
-        --mobile-viewport-height: var(--jorge-mobile-vh, 100svh);
-        --mobile-available-width: calc(100vw - var(--mobile-safe-left) - var(--mobile-safe-right) - 16px);
-        --mobile-available-height: calc(var(--mobile-viewport-height) - var(--mobile-safe-top) - var(--mobile-safe-bottom) - var(--mobile-taskbar-height) - 8px);
-        --machine-stage-width: min(
-            var(--mobile-available-width),
-            calc(var(--mobile-available-height) / 0.5625)
-        );
+        --machine-stage-width: min(95vw, calc((100vh - var(--mobile-taskbar-height) - 8px) / 0.5625));
         --machine-stage-height: calc(var(--machine-stage-width) * 0.5625);
-        --machine-stage-top: calc(
-            var(--mobile-safe-top) +
-            (var(--mobile-viewport-height) - var(--mobile-safe-top) - var(--mobile-safe-bottom) - var(--mobile-taskbar-height) - var(--machine-stage-height)) / 2
-        );
+        --machine-stage-top: calc((100vh - var(--mobile-taskbar-height) - var(--machine-stage-height)) / 2);
     }
 
     html,
@@ -4428,20 +4415,6 @@ body::before {
     .project-info h1 {
         font-size: 28px !important;
         letter-spacing: 2px !important;
-    }
-}
-
-/* =========================================================
-   VIEWPORT REAL — SAFARI / iOS
-   Usa visualViewport cuando el navegador lo expone para que el stage
-   respete el área realmente visible al ocultar/mostrar la UI del navegador.
-   ========================================================= */
-
-@supports (height: 100svh) {
-    @media (max-width: 900px) and (orientation: landscape) {
-        :root {
-            --mobile-viewport-height: var(--jorge-mobile-vh, 100svh);
-        }
     }
 }
 
