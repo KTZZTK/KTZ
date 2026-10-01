@@ -25,9 +25,25 @@
         );
     };
 
+    const sincronizarViewportReal = () => {
+        const altura = window.visualViewport?.height || window.innerHeight;
+        document.documentElement.style.setProperty("--jorge-mobile-vh", `${altura}px`);
+    };
+
+    sincronizarViewportReal();
     actualizarOrientacion();
-    window.addEventListener("resize", actualizarOrientacion, { passive: true });
-    window.addEventListener("orientationchange", actualizarOrientacion, { passive: true });
+
+    window.addEventListener("resize", () => {
+        sincronizarViewportReal();
+        actualizarOrientacion();
+    }, { passive: true });
+
+    window.addEventListener("orientationchange", () => {
+        sincronizarViewportReal();
+        actualizarOrientacion();
+    }, { passive: true });
+
+    window.visualViewport?.addEventListener("resize", sincronizarViewportReal, { passive: true });
 })();
 
 // =========================================================
@@ -2910,6 +2926,8 @@ function actualizarTrackMachine() {
     document.title = `JORGE // ${firstTrack.title}`;
 
     if (machineAudio) {
+        machineAudio.autoplay = true;
+        machineAudio.preload = "auto";
         machineAudio.src = firstTrack.audio;
         machineAudio.load();
     }
@@ -4042,14 +4060,50 @@ if (document.readyState === "complete") {
     window.addEventListener("load", intentarAutoplayMachineAudio, { once: true });
 }
 
-// Fallback silencioso: si el navegador bloqueó el autoplay, el primer gesto
-// del usuario puede desbloquearlo sin cambiar ningún control existente.
+// Fallback: si el navegador bloqueó el autoplay, el primer gesto
+// del usuario inicia el audio dentro del propio gesto. Esto es importante
+// en Safari/iPhone: no esperamos un await antes de llamar a play().
 const desbloquearAutoplayMachine = () => {
-    if (!machineAutoplayBlocked || machineAutoplayStarted) return;
-    intentarAutoplayMachineAudio();
+    if (!machineAutoplayBlocked || machineAutoplayStarted || !machineAudio) return;
+
+    const ready = setupMachineAudio();
+    if (!ready) return;
+
+    try {
+        const playPromise = machineAudio.play();
+
+        if (machineAudioCtx && machineAudioCtx.state === "suspended") {
+            machineAudioCtx.resume();
+        }
+
+        Promise.resolve(playPromise).then(() => {
+            machinePlayerPlaying = true;
+            machineAutoplayStarted = true;
+            machineAutoplayBlocked = false;
+            machinePlayerLayer?.classList.add("is-playing");
+            actualizarBotonReproduccion();
+
+            if (!machineCrtRaf) {
+                drawMachineCrt();
+            }
+        }).catch((error) => {
+            console.info("El navegador mantuvo bloqueado el audio:", error);
+        });
+    } catch (error) {
+        console.info("No se pudo desbloquear el audio:", error);
+    }
 };
-document.addEventListener("pointerdown", desbloquearAutoplayMachine, { once: true, passive: true });
-document.addEventListener("keydown", desbloquearAutoplayMachine, { once: true });
+
+document.addEventListener("pointerdown", desbloquearAutoplayMachine, {
+    once: true,
+    passive: true,
+    capture: true
+});
+
+document.addEventListener("keydown", desbloquearAutoplayMachine, {
+    once: true,
+    capture: true
+});
 
 // El organismo comienza a respirar inmediatamente al cargar la página.
 if (!machineCrtRaf) {
