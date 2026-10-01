@@ -1,0 +1,4953 @@
+@font-face {
+    font-family: "CS Vasco Halfpixel Top";
+    src: url("fonts/CsVascoHalfpixelTopDemo-R9amE.otf") format("opentype");
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+}
+
+/* =========================================================
+   JORGE.EXE — CYBER WINDOWS 2000
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    margin: 0;
+
+    /* Nuevo fondo: chasis ilustrado de la máquina.
+       La interfaz existente sigue funcionando por encima. */
+    background-color: #050708;
+    background-image: none;
+    background-position: center 32%;
+    background-size: 80% auto;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+    font-family: monospace;
+
+    overflow: hidden;
+}
+
+/* =========================================================
+   TEXTURA DEL ESCRITORIO
+   ========================================================= */
+
+body::before {
+    content: none;
+}
+
+
+/* =========================================================
+   PEQUEÑOS INDICADORES DEL SISTEMA
+   ========================================================= */
+
+body::after {
+    content: none;
+}
+
+/* =========================================================
+   SOMBRA DE LA PANTALLA
+   Se conserva el PNG completo, incluyendo la sombra de la
+   pantalla superior y la sombra de la pantalla inferior.
+   Alineación basada en el elemento superior del PSD 1920x1080.
+   PNG exportado: 1657x839.
+   ========================================================= */
+
+.machine-screen-shadow-layer {
+    position: fixed;
+    left: 10vw;
+    top: calc((100vh - (80vw * 0.5625)) * 0.32);
+    width: 80vw;
+    aspect-ratio: 16 / 9;
+    z-index: 4;
+    pointer-events: none;
+}
+
+.machine-screen-shadow {
+    position: absolute;
+    display: block;
+    margin: 0;
+    padding: 0;
+
+    /* El PNG completo conserva ambas sombras.
+       La sombra superior comienza en X=1004, Y=110 del PSD.
+       El PNG comienza 144 px antes en X y exactamente en Y=110. */
+    left: 7.5%;
+    top: 10.2%;
+    width: 86.302083%;
+    height: 77.685185%;
+
+    pointer-events: none;
+    user-select: none;
+}
+
+/* =========================================================
+   BOTONES DEL CHASIS
+   La capa replica exactamente el área visible del background:
+   80vw de ancho y proporción 16:9, con el mismo 32% vertical.
+   ========================================================= */
+
+.machine-buttons {
+    position: fixed;
+    left: 10vw;
+    top: calc((100vh - (80vw * 0.5625)) * 0.32);
+    width: 80vw;
+    aspect-ratio: 16 / 9;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.machine-button {
+    position: absolute;
+    display: block;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    outline: none;
+    max-width: none;
+    pointer-events: auto;
+    user-select: none;
+    cursor: pointer;
+    transition: filter 0.12s ease, transform 0.08s ease;
+}
+
+.machine-button img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    user-select: none;
+    pointer-events: none;
+}
+
+.machine-button:hover img {
+    filter:
+        brightness(1.28)
+        saturate(1.12)
+        drop-shadow(0 0 5px rgba(255,255,255,0.45));
+}
+
+.machine-button:active {
+    transform: translateY(3px) scale(0.97);
+}
+
+.machine-button:active img {
+    filter:
+        brightness(1.42)
+        saturate(1.15)
+        drop-shadow(0 0 7px rgba(255,255,255,0.58));
+}
+
+.machine-button:focus,
+.machine-button:focus-visible {
+    outline: none;
+}
+
+.machine-button:focus-visible img {
+    filter:
+        brightness(1.30)
+        saturate(1.12)
+        drop-shadow(0 0 5px rgba(57,255,176,0.55));
+}
+
+.machine-button-1 {
+    left: 13.645833%;
+    top: 6.296296%;
+    width: 14.895833%;
+    height: 26.944444%;
+}
+
+.machine-button-2 {
+    left: 31.666667%;
+    top: 6.018519%;
+    width: 15.364583%;
+    height: 27.129630%;
+}
+
+.machine-button-3 {
+    left: 6.614583%;
+    top: 35.555556%;
+    width: 14.895833%;
+    height: 26.574074%;
+}
+
+.machine-button-4 {
+    left: 24.635417%;
+    top: 35.833333%;
+    width: 15%;
+    height: 26.666667%;
+}
+
+/* =========================================================
+   REPRODUCTOR / CD
+   Coordenadas tomadas del PSD 1920x1080.
+   El CD queda detrás del cuerpo del reproductor.
+   ========================================================= */
+
+.machine-player-layer {
+    position: fixed;
+    left: 10vw;
+    top: calc((100vh - (80vw * 0.5625)) * 0.32);
+    width: 80vw;
+    aspect-ratio: 16 / 9;
+    z-index: 3;
+    pointer-events: none;
+}
+
+.machine-cd,
+.machine-player {
+    position: absolute;
+    display: block;
+    margin: 0;
+    padding: 0;
+    pointer-events: none;
+    user-select: none;
+}
+
+/* CD: X=981 Y=597 W=418 H=418 */
+.machine-cd {
+    left: 72.5%;
+    top: 55%;
+    width: 21.770833%;
+    height: 38.703704%;
+    transform-origin: center center;
+    animation: girar-cd 3s linear infinite;
+    z-index: 1;
+}
+
+/* Reproductor: X=1380 Y=575 W=475 H=450 */
+.machine-player {
+    left: 70%;
+    top: 53.240741%;
+    width: 24.739583%;
+    height: 41.666667%;
+    z-index: 2;
+}
+
+@keyframes girar-cd {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* =========================================================
+   VENTANA PRINCIPAL
+   ========================================================= */
+
+.window {
+    width: 800px;
+    min-height: 500px;
+
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    background: #c6c6c6;
+
+    border: 2px solid #eeeeee;
+    border-right-color: #202020;
+    border-bottom-color: #202020;
+
+    box-shadow:
+        0 0 0 1px #555,
+        10px 10px 0 rgba(0, 0, 0, 0.65),
+        0 0 35px rgba(0, 255, 170, 0.12);
+
+    z-index: 10;
+}
+
+
+/* =========================================================
+   BARRA DE TÍTULO
+   ========================================================= */
+
+.title-bar {
+    height: 31px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #111b20 0%,
+            #003b47 45%,
+            #007c72 100%
+        );
+
+    color: #eafff8;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 3px 4px 3px 8px;
+
+    font-weight: bold;
+
+    font-size: 13px;
+
+    letter-spacing: 0.5px;
+
+    cursor: move;
+
+    user-select: none;
+
+    border-bottom: 1px solid #111;
+}
+
+
+/* =========================================================
+   BOTONES DE VENTANA
+   ========================================================= */
+
+.window-buttons {
+    display: flex;
+
+    gap: 3px;
+}
+
+.window-buttons button {
+    width: 24px;
+    height: 22px;
+
+    padding: 0;
+
+    background: #bdbdbd;
+
+    color: #111;
+
+    border: 2px solid #eeeeee;
+    border-right-color: #333333;
+    border-bottom-color: #333333;
+
+    font-family: Tahoma, Arial, sans-serif;
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.window-buttons button:hover {
+    background: #d8d8d8;
+}
+
+.window-buttons button:active {
+    border: 2px solid #333333;
+    border-right-color: #eeeeee;
+    border-bottom-color: #eeeeee;
+}
+
+
+/* =========================================================
+   CONTENIDO
+   ========================================================= */
+
+.window-content {
+    min-height: 430px;
+
+    padding: 60px;
+
+    position: relative;
+
+    background:
+        linear-gradient(
+            rgba(255,255,255,0.03),
+            rgba(255,255,255,0.03)
+        ),
+        #15191b;
+
+    overflow: hidden;
+}
+
+
+/* Línea decorativa superior */
+
+.window-content::before {
+    content: "";
+
+    position: absolute;
+
+    top: 20px;
+    left: 60px;
+    right: 60px;
+
+    height: 1px;
+
+    background: #39ffb0;
+
+    opacity: 0.5;
+
+    box-shadow: 0 0 8px #39ffb0;
+}
+
+
+/* =========================================================
+   NOMBRE
+   ========================================================= */
+
+h1 {
+    margin: 0;
+
+    color: #f0f0f0;
+
+    font-family: "Arial Black", Arial, sans-serif;
+
+    font-size: 48px;
+
+    letter-spacing: 5px;
+
+    text-shadow:
+        0 0 8px rgba(57, 255, 176, 0.25);
+}
+
+
+/* =========================================================
+   SUBTÍTULO
+   ========================================================= */
+
+.subtitle {
+    margin-top: 8px;
+
+    color: #39ffb0;
+
+    font-family: "Courier New", monospace;
+
+    font-size: 13px;
+
+    letter-spacing: 2px;
+
+    text-shadow:
+        0 0 7px rgba(57, 255, 176, 0.45);
+}
+
+
+/* =========================================================
+   MENÚ
+   ========================================================= */
+
+.menu {
+    margin-top: 70px;
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 16px;
+
+    max-width: 500px;
+}
+
+
+/* =========================================================
+   BOTONES PRINCIPALES
+   ========================================================= */
+
+.menu-button {
+    padding: 17px;
+
+    background:
+        linear-gradient(
+            #33383a,
+            #222628
+        );
+
+    color: #d8d8d8;
+
+    border: 2px solid #727777;
+    border-right-color: #111;
+    border-bottom-color: #111;
+
+    font-family: Tahoma, Arial, sans-serif;
+
+    font-size: 14px;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        color 0.12s,
+        background 0.12s,
+        box-shadow 0.12s;
+}
+
+.menu-button:hover {
+    color: #39ffb0;
+
+    background:
+        linear-gradient(
+            #3a4143,
+            #24292b
+        );
+
+    box-shadow:
+        inset 0 0 0 1px #39ffb0,
+        0 0 10px rgba(57, 255, 176, 0.25);
+}
+
+.menu-button:active {
+    border: 2px solid #111;
+    border-right-color: #727777;
+    border-bottom-color: #727777;
+
+    transform: translate(1px, 1px);
+}
+
+
+/* =========================================================
+   BARRA INFERIOR
+   ========================================================= */
+
+.status-bar {
+    height: 30px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 0;
+
+    padding: 3px;
+
+    background: #262a2b;
+
+    border-top: 1px solid #666;
+
+    font-family: Tahoma, Arial, sans-serif;
+
+    font-size: 11px;
+
+    color: #d0d0d0;
+}
+
+.status-bar span:first-child {
+    height: 23px;
+
+    padding: 4px 12px;
+
+    background:
+        linear-gradient(
+            #3b4143,
+            #25292a
+        );
+
+    border: 2px solid #777;
+    border-right-color: #111;
+    border-bottom-color: #111;
+
+    color: #39ffb0;
+
+    font-weight: bold;
+
+    font-family: "Courier New", monospace;
+}
+
+.status-bar span:last-child {
+    margin-left: 8px;
+
+    color: #8d8d8d;
+
+    font-family: "Courier New", monospace;
+}
+
+
+/* =========================================================
+   RESPONSIVE — CELULAR
+   ========================================================= */
+
+@media (max-width: 850px) {
+
+    .window {
+        width: calc(100vw - 30px);
+
+        min-height: 0;
+
+        max-height: calc(100vh - 60px);
+    }
+
+    .window-content {
+        padding: 40px 30px;
+
+        min-height: 400px;
+    }
+
+    .window-content::before {
+        left: 30px;
+        right: 30px;
+    }
+
+    h1 {
+        font-size: 36px;
+    }
+
+    .menu {
+        grid-template-columns: 1fr;
+
+        margin-top: 50px;
+    }
+}
+
+
+@media (max-width: 500px) {
+
+    .window {
+        width: calc(100vw - 16px);
+
+        max-height: calc(100vh - 30px);
+    }
+
+    .window-content {
+        padding: 35px 20px;
+    }
+
+    .window-content::before {
+        left: 20px;
+        right: 20px;
+    }
+
+    h1 {
+        font-size: 29px;
+
+        letter-spacing: 3px;
+    }
+
+    .subtitle {
+        font-size: 10px;
+
+        letter-spacing: 1px;
+    }
+}/* =========================================================
+   MY WORK — FILE EXPLORER
+   ========================================================= */
+
+.work-window {
+    width: 620px;
+
+    min-height: 420px;
+
+    background: #c6c6c6;
+
+    box-shadow:
+        0 0 0 1px #555,
+        10px 10px 0 rgba(0, 0, 0, 0.7),
+        0 0 30px rgba(57, 255, 176, 0.12);
+}
+
+
+/* =========================================================
+   CONTENIDO
+   ========================================================= */
+
+.work-content {
+    min-height: 387px;
+
+    background: #171b1d;
+
+    color: #d5d5d5;
+
+    position: relative;
+}
+
+
+/* =========================================================
+   MENÚ SUPERIOR
+   ========================================================= */
+
+.menu-bar {
+    height: 30px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 24px;
+
+    padding-left: 10px;
+
+    background: #25292b;
+
+    border-bottom: 1px solid #555;
+
+    font-family: Tahoma, Arial, sans-serif;
+
+    font-size: 11px;
+}
+
+.menu-bar span {
+    cursor: default;
+}
+
+.menu-bar span:hover {
+    color: #39ffb0;
+}
+
+
+/* =========================================================
+   CARPETAS
+   ========================================================= */
+
+.folders {
+
+    padding: 35px;
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 25px;
+}
+
+
+/* =========================================================
+   CARPETA
+   ========================================================= */
+
+.folder {
+
+    height: 105px;
+
+    padding: 15px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 8px;
+
+    background:
+        linear-gradient(
+            #303537,
+            #222628
+        );
+
+    border: 2px solid #666;
+
+    border-right-color: #111;
+    border-bottom-color: #111;
+
+    color: #d8d8d8;
+
+    font-family: "Courier New", monospace;
+
+    font-size: 12px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.12s,
+        color 0.12s,
+        box-shadow 0.12s;
+}
+
+
+.folder:hover {
+
+    color: #39ffb0;
+
+    background:
+        linear-gradient(
+            #394043,
+            #24292b
+        );
+
+    box-shadow:
+        inset 0 0 0 1px #39ffb0,
+        0 0 10px rgba(57, 255, 176, 0.2);
+}
+
+
+/* =========================================================
+   ICONO
+   ========================================================= */
+
+.folder-icon {
+
+    font-size: 28px;
+
+    line-height: 28px;
+}
+
+
+/* =========================================================
+   BARRA DE ESTADO
+   ========================================================= */
+
+.work-status {
+
+    position: absolute;
+
+    bottom: 0;
+
+    left: 0;
+
+    width: 100%;
+
+    height: 27px;
+
+    padding: 5px 9px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    background: #242829;
+
+    border-top: 1px solid #555;
+
+    color: #858585;
+
+    font-family: "Courier New", monospace;
+
+    font-size: 10px;
+}/* =========================================================
+   TASKBAR — JORGE OS
+   ========================================================= */
+
+.taskbar {
+
+    position: fixed;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    height: 34px;
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 3px;
+
+    background:
+        linear-gradient(
+            #303638,
+            #171a1c
+        );
+
+    border-top: 1px solid #707575;
+
+    box-shadow:
+        0 -3px 15px rgba(0, 0, 0, 0.5);
+
+    z-index: 9999;
+
+    font-family: Tahoma, Arial, sans-serif;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   START
+   ========================================================= */
+
+.start-button {
+
+    height: 27px;
+
+    min-width: 78px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 6px;
+
+    background:
+        linear-gradient(
+            #414749,
+            #292d2f
+        );
+
+    color: #dcdcdc;
+
+    border: 2px solid #777;
+
+    border-right-color: #111;
+    border-bottom-color: #111;
+
+    font-family: Tahoma, Arial, sans-serif;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+.start-button:hover {
+
+    color: #39ffb0;
+
+    box-shadow:
+        inset 0 0 0 1px #39ffb0;
+}
+
+
+.start-button:active {
+
+    border: 2px solid #111;
+
+    border-right-color: #777;
+    border-bottom-color: #777;
+}
+
+
+.start-icon {
+
+    color: #39ffb0;
+
+    text-shadow:
+        0 0 5px rgba(57, 255, 176, 0.5);
+}
+
+
+/* =========================================================
+   VENTANAS DE LA TASKBAR
+   ========================================================= */
+
+.taskbar-windows {
+
+    height: 100%;
+
+    flex: 1;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 4px;
+
+    padding-left: 5px;
+}
+
+
+.task-window {
+
+    height: 27px;
+
+    min-width: 130px;
+
+    padding: 0 12px;
+
+    background:
+        linear-gradient(
+            #34393b,
+            #25292a
+        );
+
+    color: #bdbdbd;
+
+    border: 2px solid #666;
+
+    border-right-color: #111;
+    border-bottom-color: #111;
+
+    font-family: Tahoma, Arial, sans-serif;
+
+    font-size: 11px;
+
+    text-align: left;
+
+    cursor: pointer;
+}
+
+
+.task-window:hover {
+
+    color: #39ffb0;
+}
+
+
+.task-window.active {
+
+    background:
+        linear-gradient(
+            #202527,
+            #141718
+        );
+
+    color: #39ffb0;
+
+    box-shadow:
+        inset 0 0 0 1px rgba(57, 255, 176, 0.35);
+}
+
+
+/* =========================================================
+   SISTEMA
+   ========================================================= */
+
+.taskbar-system {
+
+    height: 27px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 0 12px;
+
+    border: 1px solid #111;
+
+    border-top-color: #555;
+    border-left-color: #555;
+
+    color: #777;
+
+    font-family: "Courier New", monospace;
+
+    font-size: 10px;
+}
+
+
+.system-led {
+
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: #39ffb0;
+
+    box-shadow:
+        0 0 6px #39ffb0;
+
+    animation: systemPulse 2s infinite;
+}
+
+
+@keyframes systemPulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.35;
+    }
+}
+
+
+.system-time {
+
+    color: #b0b0b0;
+
+    min-width: 38px;
+
+    text-align: right;
+}
+/* =========================================================
+   ILLUSTRATION WINDOW
+   ========================================================= */
+
+.illustration-window {
+
+    width: 760px;
+
+    min-height: 520px;
+
+    background: #c6c6c6;
+
+    box-shadow:
+        0 0 0 1px #555,
+        10px 10px 0 rgba(0, 0, 0, 0.7),
+        0 0 35px rgba(57, 255, 176, 0.12);
+}
+
+
+.illustration-content {
+
+    min-height: 487px;
+
+    position: relative;
+
+    background: #111517;
+
+    color: #d0d0d0;
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   RUTA
+   ========================================================= */
+
+.illustration-toolbar {
+
+    height: 34px;
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 0 12px;
+
+    background: #202527;
+
+    border-bottom: 1px solid #555;
+
+    color: #777;
+
+    font-family: "Courier New", monospace;
+
+    font-size: 10px;
+}
+.projects {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    padding: 14px;
+}
+
+.project {
+    background: #1b1f20;
+    border: 1px solid #444;
+    padding: 8px;
+    cursor: pointer;
+}
+
+.project-preview {
+    width: 100%;
+    height: 150px;
+    background: #101314;
+    border: 1px solid #333;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+}
+
+.project-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+/* =========================================================
+   PROYECTOS
+   ========================================================= */
+
+.projects {
+
+    padding: 28px;
+
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 18px;
+}
+
+
+/* =========================================================
+   PROYECTO
+   ========================================================= */
+
+.project {
+
+    cursor: pointer;
+
+    padding: 8px;
+
+    background: #1c2123;
+
+    border: 1px solid #333;
+
+    transition:
+        border 0.15s,
+        box-shadow 0.15s,
+        transform 0.15s;
+}
+
+/* ==========================================
+   VENTANA DE PROYECTO
+   ========================================== */
+
+.project-window {
+    width: 920px !important;
+    height: 720px !important;
+
+    min-width: 0 !important;
+    min-height: 0 !important;
+
+    position: absolute !important;
+
+    left: calc(50% - 460px);
+    top: calc(50% - 360px);
+
+    transform: none;
+
+    overflow: hidden !important;
+    
+    max-width: calc(100vw - 30px) !important;
+    max-height: calc(100vh - 30px) !important;
+}
+
+.project-window-content {
+    height: calc(100% - 28px);
+    min-height: 0;
+    background: #111517;
+    color: #d0d0d0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ==========================================
+   GALERÍA DEL PROYECTO
+   ========================================== */
+
+.doll-gallery {
+    padding: 18px;
+    box-sizing: border-box;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-content: start;
+
+    gap: 14px;
+
+    flex: none;
+    min-height: auto;
+    height: auto;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+
+.doll-image {
+    background: #1c2123;
+    border: 1px solid #333;
+    padding: 6px;
+
+    min-height: 180px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+}
+
+.doll-image img {
+    width: 100%;
+    height: 180px;
+
+    object-fit: contain;
+    display: block;
+}
+
+
+.doll-image:hover {
+    border-color: #39ffb0;
+
+    box-shadow:
+        0 0 12px rgba(57, 255, 176, 0.2);
+
+    transform: translateY(-2px);
+}
+
+
+.doll-image img {
+    width: 100%;
+    height: 180px;
+
+    object-fit: contain;
+    display: block;
+}
+.project:hover {
+
+    border-color: #39ffb0;
+
+    box-shadow:
+        0 0 12px rgba(57, 255, 176, 0.2);
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   PREVIEW
+   ========================================================= */
+
+.project-preview {
+
+    width: 100%;
+
+    aspect-ratio: 1 / 1;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #292f31,
+            #101314
+        );
+
+    border: 1px solid #444;
+
+    color: #39ffb0;
+
+    font-family: "Courier New", monospace;
+
+    font-size: 11px;
+
+    text-shadow:
+        0 0 6px rgba(57, 255, 176, 0.4);
+}
+
+
+/* =========================================================
+   NOMBRE
+   ========================================================= */
+
+.project-name {
+
+    margin-top: 9px;
+
+    color: #ddd;
+
+    font-family: "CS Vasco Halfpixel Top", monospace;
+
+    font-size: 11px;
+
+    font-weight: bold;
+}
+
+
+.project-type {
+
+    margin-top: 4px;
+
+    color: #666;
+
+    font-family: "Courier New", monospace;
+
+    font-size: 9px;
+}
+
+
+.project:hover .project-name {
+
+    color: #39ffb0;
+}
+/* =========================================================
+   CARPETAS GENERALES
+   ========================================================= */
+
+.folder-content {
+
+    min-height: 390px;
+
+    position: relative;
+
+    background: #121617;
+
+    color: #d0d0d0;
+
+}
+
+
+/* =========================================================
+   RUTA
+   ========================================================= */
+
+.folder-header {
+
+    height: 34px;
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 0 12px;
+
+    background: #202527;
+
+    border-bottom: 1px solid #444;
+
+    color: #777;
+
+    font-family: "Courier New", monospace;
+
+    font-size: 10px;
+
+}
+
+
+/* =========================================================
+   CARPETA VACÍA
+   ========================================================= */
+
+.empty-folder {
+
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    transform:
+        translate(-50%, -50%);
+
+    text-align: center;
+
+    color: #777;
+
+    font-family: "Courier New", monospace;
+
+    font-size: 12px;
+
+}
+
+
+.folder-big-icon {
+
+    font-size: 42px;
+
+    margin-bottom: 12px;
+
+    opacity: 0.75;
+}
+
+
+.empty-folder small {
+
+    display: block;
+
+    margin-top: 8px;
+
+    color: #39ffb0;
+
+    font-size: 9px;
+
+    letter-spacing: 1px;
+}
+
+
+/* =========================================================
+   BRANDING / MOTION
+   ========================================================= */
+
+.branding-window,
+.toys-window {
+
+    width: 600px;
+
+}
+
+
+/* =========================================================
+   MUSIC / WINAMP
+   ========================================================= */
+
+.music-window {
+
+    width: 430px;
+
+    background: #111;
+
+}
+
+
+.music-content {
+
+    min-height: 310px;
+
+    padding: 20px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #16191a,
+            #090b0c
+        );
+
+    color: #39ffb0;
+
+    font-family: "Courier New", monospace;
+
+}
+
+
+.music-display {
+
+    padding: 14px;
+
+    border: 1px solid #333;
+
+    background: #050707;
+
+}
+
+
+.music-status {
+
+    font-size: 9px;
+
+    color: #666;
+
+    letter-spacing: 2px;
+}
+
+
+.music-title {
+
+    margin-top: 10px;
+
+    font-size: 13px;
+
+    text-shadow:
+        0 0 8px rgba(57,255,176,0.4);
+}
+
+
+.music-time {
+
+    margin-top: 12px;
+
+    font-size: 18px;
+
+    text-align: right;
+}
+
+
+/* =========================================================
+   VISUALIZER
+   ========================================================= */
+
+.visualizer {
+
+    height: 80px;
+
+    margin-top: 15px;
+
+    display: flex;
+
+    align-items: end;
+
+    justify-content: center;
+
+    gap: 5px;
+
+    padding: 10px;
+
+    background: #050707;
+
+    border: 1px solid #333;
+}
+
+
+.visualizer span {
+
+    width: 10px;
+
+    height: 20px;
+
+    background: #39ffb0;
+
+    box-shadow:
+        0 0 5px rgba(57,255,176,0.5);
+
+    animation:
+        visualizer 0.8s infinite alternate;
+}
+
+
+.visualizer span:nth-child(2) {
+    animation-delay: .1s;
+}
+
+.visualizer span:nth-child(3) {
+    animation-delay: .2s;
+}
+
+.visualizer span:nth-child(4) {
+    animation-delay: .3s;
+}
+
+.visualizer span:nth-child(5) {
+    animation-delay: .4s;
+}
+
+.visualizer span:nth-child(6) {
+    animation-delay: .2s;
+}
+
+.visualizer span:nth-child(7) {
+    animation-delay: .5s;
+}
+
+.visualizer span:nth-child(8) {
+    animation-delay: .15s;
+}
+
+.visualizer span:nth-child(9) {
+    animation-delay: .35s;
+}
+
+.visualizer span:nth-child(10) {
+    animation-delay: .25s;
+}
+
+
+@keyframes visualizer {
+
+    from {
+        height: 10px;
+    }
+
+    to {
+        height: 55px;
+    }
+
+}
+
+
+/* =========================================================
+   CONTROLES
+   ========================================================= */
+
+.player-controls {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 6px;
+
+    margin-top: 15px;
+}
+
+
+.player-controls button {
+
+    width: 55px;
+
+    height: 27px;
+
+    background: #292d2e;
+
+    color: #aaa;
+
+    border: 2px solid #666;
+
+    border-right-color: #111;
+    border-bottom-color: #111;
+
+    cursor: pointer;
+}
+
+
+.player-controls button:hover {
+
+    color: #39ffb0;
+
+    box-shadow:
+        inset 0 0 0 1px #39ffb0;
+}
+
+
+/* =========================================================
+   MENSAJE
+   ========================================================= */
+
+.music-message {
+
+    margin-top: 14px;
+
+    text-align: center;
+
+    color: #555;
+
+    font-size: 9px;
+}
+/* =========================================================
+   ABOUT
+   ========================================================= */
+
+.about-window {
+
+    width: 600px;
+
+}
+
+
+.about-content {
+
+    min-height: 430px;
+
+    background: #121617;
+
+    color: #d0d0d0;
+
+}
+
+
+.about-main {
+
+    padding: 30px 38px;
+
+}
+
+
+.about-header {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+
+}
+
+
+.about-avatar {
+
+    width: 70px;
+    height: 70px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: #202526;
+
+    border: 1px solid #555;
+
+    color: #39ffb0;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 20px;
+
+    font-weight: bold;
+
+    box-shadow:
+        inset 0 0 15px
+        rgba(57,255,176,0.08);
+}
+
+
+.about-avatar img {
+
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+
+    object-position: 42% center;
+
+}
+
+
+.about-name {
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 20px;
+
+    font-weight: bold;
+
+    letter-spacing: 2px;
+
+}
+
+
+.about-role {
+
+    margin-top: 7px;
+
+    color: #39ffb0;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 10px;
+
+    letter-spacing: 1px;
+
+}
+
+
+.about-divider {
+
+    height: 1px;
+
+    margin: 25px 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            #39ffb0,
+            #333,
+            transparent
+        );
+
+}
+
+
+.about-text {
+
+    max-width: 500px;
+
+    color: #999;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 11px;
+
+    line-height: 1.7;
+
+}
+
+
+.about-text p {
+
+    margin-bottom: 14px;
+
+}
+
+
+.about-info {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 10px;
+
+    margin-top: 25px;
+
+}
+
+
+.about-info div {
+
+    padding: 10px;
+
+    background: #1b2021;
+
+    border: 1px solid #333;
+
+}
+
+
+.about-info span {
+
+    display: block;
+
+    margin-bottom: 6px;
+
+    color: #555;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 8px;
+
+}
+
+
+.about-info strong {
+
+    color: #bbb;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 9px;
+
+}
+
+
+.about-info div:first-child strong {
+
+    color: #39ffb0;
+
+}
+
+
+/* =========================================================
+   CONTACT
+   ========================================================= */
+
+.contact-window {
+
+    width: 560px;
+
+}
+
+
+.contact-content {
+
+    min-height: 500px;
+
+    background: #101415;
+
+}
+
+
+.contact-main {
+
+    padding: 30px;
+
+}
+
+
+.contact-title {
+
+    color: #ddd;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 17px;
+
+    font-weight: bold;
+
+    letter-spacing: 1px;
+
+}
+
+
+.contact-subtitle {
+
+    margin-top: 6px;
+
+    color: #555;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 9px;
+
+}
+
+
+.contact-list {
+
+    margin-top: 25px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+
+}
+
+
+.contact-item {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding: 13px;
+
+    background: #1a1f20;
+
+    border: 1px solid #333;
+
+    color: #bbb;
+
+    text-decoration: none;
+
+    transition:
+        border-color .15s,
+        background .15s;
+
+}
+
+
+.contact-item:hover {
+
+    background: #202627;
+
+    border-color: #39ffb0;
+
+}
+
+
+.contact-icon {
+
+    width: 30px;
+
+    text-align: center;
+
+    color: #39ffb0;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 17px;
+
+}
+
+
+.contact-item small {
+
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: #555;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 8px;
+
+}
+
+
+.contact-item strong {
+
+    color: #aaa;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 10px;
+
+}
+
+
+.contact-item:hover strong {
+
+    color: #39ffb0;
+
+}
+
+
+.contact-software {
+
+    margin-top: 20px;
+
+    padding-top: 15px;
+
+    border-top: 1px solid #292d2e;
+
+}
+
+
+.contact-section-label {
+
+    margin-bottom: 10px;
+
+    color: #555;
+
+    font-family: "Courier New", monospace;
+
+    font-size: 9px;
+
+    letter-spacing: .5px;
+
+}
+
+
+.contact-software-grid {
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 6px 8px;
+
+}
+
+
+.contact-software-item {
+
+    min-height: 28px;
+
+    display: grid;
+
+    grid-template-columns: 30px minmax(0, 1fr) auto;
+
+    align-items: center;
+
+    gap: 6px;
+
+    padding: 7px 8px;
+
+    background: #161b1c;
+
+    border: 1px solid #2f3435;
+
+    font-family: "Courier New", monospace;
+
+}
+
+
+.contact-software-item span {
+
+    color: #39ffb0;
+
+    font-size: 8px;
+
+}
+
+
+.contact-software-item strong {
+
+    min-width: 0;
+
+    color: #aaa;
+
+    font-size: 8px;
+
+    font-weight: normal;
+
+}
+
+
+.contact-software-item em {
+
+    color: #666;
+
+    font-size: 7px;
+
+    font-style: normal;
+
+    white-space: nowrap;
+
+}
+
+
+.contact-software-wide {
+
+    grid-column: 1 / -1;
+
+}
+
+
+.contact-message {
+
+    margin-top: 25px;
+
+    padding-top: 15px;
+
+    border-top: 1px solid #292d2e;
+
+    color: #666;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 9px;
+
+    line-height: 1.6;
+
+}
+/* =========================================
+   VISOR DE IMÁGENES
+   ========================================= */
+
+.project-window-content {
+    position: relative;
+}
+
+.image-viewer {
+    position: absolute;
+    inset: 0;
+
+    background: rgba(10, 14, 15, 0.97);
+
+    z-index: 50;
+
+    display: none;
+
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+.image-viewer.active {
+    display: flex;
+}
+
+.image-viewer-image {
+    max-width: 90%;
+    max-height: 75%;
+    cursor: default;
+
+    object-fit: contain;
+
+    border: 1px solid #333;
+
+    box-shadow:
+        0 0 0 1px #111,
+        0 0 25px rgba(57, 255, 176, 0.12);
+}
+
+.viewer-controls {
+    margin-top: 20px;
+
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.viewer-button {
+    width: 45px;
+    height: 32px;
+
+    background: #1c2123;
+
+    border: 1px solid #555;
+
+    color: #39ffb0;
+
+    font-family: monospace;
+    font-size: 18px;
+
+    cursor: pointer;
+}
+
+.viewer-button:hover {
+    background: #263033;
+
+    border-color: #39ffb0;
+
+    box-shadow:
+        0 0 8px rgba(57, 255, 176, 0.3);
+}
+
+.viewer-counter {
+    color: #39ffb0;
+
+    font-family: monospace;
+    font-size: 13px;
+
+    min-width: 70px;
+    text-align: center;
+}
+
+.viewer-close {
+    position: absolute;
+
+    top: 10px;
+    right: 10px;
+
+    width: 30px;
+    height: 25px;
+
+    background: #1c2123;
+
+    border: 1px solid #555;
+
+    color: #fff;
+
+    cursor: pointer;
+}
+
+.viewer-close:hover {
+    border-color: #39ffb0;
+    color: #39ffb0;
+}
+.desktop-icons {
+    position: fixed;
+
+    top: 60px;
+    left: 30px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 25px;
+
+    z-index: 1;
+}
+
+
+.desktop-icon {
+
+    width: 90px;
+
+    text-align: center;
+
+    color: #d0d0d0;
+
+    font-family: monospace;
+    font-size: 11px;
+
+    cursor: pointer;
+
+    user-select: none;
+}
+
+
+.desktop-icon-image {
+
+    font-size: 38px;
+
+    margin-bottom: 6px;
+
+    filter:
+        drop-shadow(0 0 5px rgba(57,255,176,.15));
+}
+
+
+.desktop-icon:hover {
+
+    color: #39ffb0;
+
+}
+
+
+.desktop-icon:hover .desktop-icon-image {
+
+    transform: scale(1.05);
+
+}
+.taskbar {
+
+    position: fixed;
+
+    left: 0;
+    bottom: 0;
+
+    width: 100%;
+    height: 34px;
+
+    background: #111719;
+
+    border-top: 1px solid #444;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 8px;
+
+    box-sizing: border-box;
+
+    z-index: 9999;
+
+    font-family: monospace;
+    font-size: 11px;
+}
+.task-status {
+    margin-left: auto;
+}
+.project-description {
+
+    padding: 18px 22px;
+
+    background: #171b1d;
+
+    border-bottom: 1px solid #444;
+
+    color: #d0d0d0;
+
+}
+
+
+.description-header {
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+    color: #ffffff;
+
+    letter-spacing: 1px;
+
+    margin-bottom: 4px;
+
+}
+
+
+.description-type {
+
+    font-size: 11px;
+
+    color: #00ffae;
+
+    letter-spacing: 1px;
+
+    margin-bottom: 12px;
+    
+
+}
+
+
+.project-description p {
+
+    max-width: 850px;
+
+    margin: 0;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+
+    color: #aaa;
+
+}
+
+/* ==========================================
+   GALERÍA: SCROLL COMPLETO DEL PROYECTO
+   ========================================== */
+.project-window-content > .menu-bar,
+.project-window-content > .illustration-toolbar,
+.project-window-content > .project-info {
+    flex-shrink: 0;
+    padding-top: 20px;
+}
+
+.project-window-content > .doll-gallery {
+    flex: 1 1 auto;
+    min-height: 0;
+}
+
+/* =========================================================
+   PROYECTOS — ESTRUCTURA MULTIMEDIA
+   ========================================================= */
+
+.illustration-content {
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-bottom: 40px;
+}
+
+.illustration-content > .work-status {
+    position: sticky;
+    bottom: 0;
+    z-index: 5;
+}
+
+
+/* =========================================================
+   SHIROS — PRESENTACIÓN VERTICAL TIPO BEHANCE
+   ========================================================= */
+
+.behance-project {
+    overflow: hidden;
+}
+
+.behance-gallery {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0;
+    background: #0b0e0f;
+}
+
+.behance-image {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background: #0b0e0f;
+}
+
+.behance-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    content-visibility: auto;
+}
+
+
+/* =========================================================
+   VIDEO — ENIGMA BEAT TAPE
+   ========================================================= */
+
+.project-media-slot {
+    flex-shrink: 0;
+}
+
+.project-video {
+    margin: 0 18px 14px 18px;
+    border: 1px solid #333;
+    background: #151a1c;
+}
+
+.project-video-header {
+    min-height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 10px;
+    background: #202527;
+    border-bottom: 1px solid #444;
+    color: #39ffb0;
+    font-family: "Courier New", monospace;
+    font-size: 10px;
+    letter-spacing: 0.5px;
+}
+
+.project-video-status {
+    color: #777;
+}
+
+.project-video-body {
+    /* El panel conserva la altura original. El iframe se superpone
+       sobre la galería para que cargar el video NO cambie el tamaño
+       del viewport ni del thumb del scrollbar. */
+    height: 110px;
+    min-height: 110px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+}
+
+/* Cuando aparece YouTube, el iframe no empuja la galería: se dibuja
+   como una capa sobre ella. Así la barra mantiene exactamente el
+   mismo recorrido antes y después de pulsar LOAD VISUAL. */
+.project-video-body:has(.project-video-frame) {
+    position: relative;
+    overflow: visible;
+}
+
+.project-video-body .project-video-frame {
+    position: absolute;
+    left: 12px;
+    top: 12px;
+    width: calc(100% - 24px);
+    height: 390px;
+    z-index: 20;
+}
+
+.video-placeholder {
+    width: 100%;
+    min-height: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: 1px dashed #444;
+    color: #777;
+    font-family: "Courier New", monospace;
+    font-size: 11px;
+}
+
+.video-placeholder small {
+    color: #555;
+    text-align: center;
+}
+
+.load-video-button {
+    padding: 10px 18px;
+    background: #1c2123;
+    border: 1px solid #555;
+    color: #39ffb0;
+    font-family: "Courier New", monospace;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.load-video-button:hover {
+    border-color: #39ffb0;
+    box-shadow: 0 0 10px rgba(57, 255, 176, 0.18);
+}
+
+.project-video-frame {
+    width: 100%;
+    height: 390px;
+    display: block;
+    border: 0;
+}
+
+
+/* =========================================================
+   PROYECTOS — PREVIEWS
+   ========================================================= */
+
+.project-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+/* =========================================================
+   CORRECCIÓN FINAL — VENTANA ILLUSTRATION
+   La ventana queda dentro del monitor y el contenido hace
+   scroll internamente, sin superponer la barra inferior.
+   ========================================================= */
+
+.project-window {
+    width: min(850px, calc(100vw - 30px)) !important;
+    height: min(680px, calc(100vh - 50px)) !important;
+    max-height: calc(100vh - 50px) !important;
+    min-height: 0 !important;
+
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;
+
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+}
+
+.project-window-content {
+    height: calc(100% - 31px) !important;
+    max-height: calc(100% - 31px) !important;
+    min-height: 0 !important;
+
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+}
+
+/* El contenido de Illustration es el que debe desplazarse. */
+.project-window-content .illustration-content {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    height: auto !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    padding-bottom: 0 !important;
+}
+
+/* La barra inferior queda dentro de la ventana, no encima de las obras. */
+.project-window-content .illustration-content > .work-status {
+    position: static !important;
+    flex-shrink: 0 !important;
+}
+
+/* Si work-status es hermano del contenido, también queda fijo dentro. */
+.project-window-content > .work-status {
+    position: static !important;
+    flex-shrink: 0 !important;
+}
+
+/* La galería de proyectos sigue creciendo hacia abajo dentro del scroll. */
+.project-window-content .projects {
+    flex-shrink: 0 !important;
+}
+
+/* =========================================================
+   PREVIEWS — LLENAR EL RECUADRO SIN DEFORMAR
+   ========================================================= */
+
+.project-preview {
+    overflow: hidden !important;
+}
+
+.project-preview img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block !important;
+}
+
+
+/* =========================================================
+   CORRECCIÓN REAL — VENTANA PRINCIPAL DE ILLUSTRATION
+   ========================================================= */
+
+/*
+   IMPORTANTE:
+   La ventana ILLUSTRATION usa .illustration-window y
+   .illustration-content. No .project-window-content.
+*/
+
+.illustration-window {
+    width: min(760px, calc(100vw - 30px)) !important;
+    height: min(680px, calc(100vh - 45px)) !important;
+    max-height: calc(100vh - 45px) !important;
+    min-height: 0 !important;
+
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+}
+
+/* El contenido ocupa solamente el espacio debajo del title bar. */
+.illustration-window > .illustration-content {
+    height: calc(100% - 31px) !important;
+    max-height: calc(100% - 31px) !important;
+    min-height: 0 !important;
+
+    display: flex !important;
+    flex-direction: column !important;
+
+    overflow: hidden !important;
+    position: relative !important;
+}
+
+/* Menú y ruta permanecen arriba. */
+.illustration-content > .menu-bar,
+.illustration-content > .illustration-toolbar {
+    flex: 0 0 auto !important;
+}
+
+/*
+   ESTA es la zona que hace scroll.
+   La ventana ya no crece con los proyectos.
+*/
+.illustration-content > .projects {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    height: auto !important;
+
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+
+    align-content: start !important;
+}
+
+/*
+   La barra inferior queda ligada a la ventana.
+   Ya no se posiciona encima de las imágenes.
+*/
+.illustration-content > .work-status {
+    position: static !important;
+
+    flex: 0 0 27px !important;
+    height: 27px !important;
+    min-height: 27px !important;
+
+    width: 100% !important;
+    box-sizing: border-box !important;
+
+    z-index: 10 !important;
+}
+
+/* =========================================================
+   PREVIEWS — LLENAR EL RECUADRO SIN DEFORMAR
+   ========================================================= */
+
+.project-preview {
+    overflow: hidden !important;
+}
+
+.project-preview img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block !important;
+}
+
+
+/* =========================================================
+   V4 — ELIMINAR EL ESPACIO VACÍO INFERIOR
+   ========================================================= */
+
+/*
+   La ventana se organiza en cuatro zonas:
+   1. barra de menú
+   2. ruta
+   3. proyectos con scroll
+   4. barra de estado
+*/
+.illustration-window {
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+}
+
+.illustration-window > .illustration-content {
+    display: grid !important;
+    grid-template-rows: auto auto minmax(0, 1fr) 27px !important;
+
+    height: calc(100% - 31px) !important;
+    max-height: calc(100% - 31px) !important;
+    min-height: 0 !important;
+
+    overflow: hidden !important;
+    position: relative !important;
+}
+
+/* Evita que la zona de proyectos genere altura extra. */
+.illustration-window > .illustration-content > .projects {
+    grid-row: 3 !important;
+
+    min-height: 0 !important;
+    height: auto !important;
+    max-height: none !important;
+
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+
+    align-content: start !important;
+}
+
+/* La barra de estado ocupa exactamente la última fila. */
+.illustration-window > .illustration-content > .work-status {
+    grid-row: 4 !important;
+
+    position: static !important;
+    width: 100% !important;
+    height: 27px !important;
+    min-height: 27px !important;
+    max-height: 27px !important;
+
+    box-sizing: border-box !important;
+    margin: 0 !important;
+}
+
+/* Las imágenes continúan llenando sus previews sin deformarse. */
+.project-preview {
+    overflow: hidden !important;
+}
+
+.project-preview img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block !important;
+}
+
+
+/* =========================================================
+   V5 — QUITAR EL HUECO INFERIOR REAL
+   ========================================================= */
+
+/*
+   El hueco no lo estaba creando el scroll:
+   .illustration-content tenía un padding-bottom de 40px
+   en una regla anterior. Ese padding queda debajo de la
+   barra de estado y produce exactamente el espacio de la
+   captura.
+*/
+.illustration-window > .illustration-content {
+    padding-bottom: 0 !important;
+    padding-top: 0 !important;
+    box-sizing: border-box !important;
+}
+
+/* El scroll ocupa todo el espacio disponible hasta la barra. */
+.illustration-window > .illustration-content > .projects {
+    margin-bottom: 0 !important;
+    padding-bottom: 14px !important;
+}
+
+/* La barra queda pegada al borde inferior de la ventana. */
+.illustration-window > .illustration-content > .work-status {
+    margin-bottom: 0 !important;
+    bottom: auto !important;
+}
+
+/* =========================================================
+   V6 — PROJECT WINDOWS / GALLERIES
+   - Ventanas un poco más grandes, sin salir del monitor.
+   - Las galerías normales tienen scroll interno real.
+   - Doll Series usa presentación vertical tipo Behance.
+   - El visor aprovecha mejor el espacio disponible.
+   ========================================================= */
+
+.project-window {
+    width: min(920px, calc(100vw - 30px)) !important;
+    height: min(720px, calc(100vh - 50px)) !important;
+    max-width: calc(100vw - 30px) !important;
+    max-height: calc(100vh - 50px) !important;
+    min-height: 0 !important;
+}
+
+.project-window-content {
+    height: calc(100% - 31px) !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.project-window-content > .menu-bar,
+.project-window-content > .illustration-toolbar,
+.project-window-content > .project-info,
+.project-window-content > .project-media-slot {
+    flex: 0 0 auto !important;
+}
+
+/* Galerías normales: esta es la única zona que hace scroll. */
+.project-window-content > .doll-gallery {
+    flex: 1 1 0 !important;
+    min-height: 0 !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    align-content: start !important;
+    padding-bottom: 18px !important;
+}
+
+/* Evita que las tarjetas se aplasten dentro del área scrolleable. */
+.project-window-content > .doll-gallery .doll-image {
+    min-width: 0 !important;
+    min-height: 180px !important;
+}
+
+/* Shiros + Doll: presentación vertical tipo Behance. */
+.project-window-content.behance-project > .behance-gallery {
+    flex: 1 1 0 !important;
+    min-height: 0 !important;
+    height: auto !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+}
+
+/* Imágenes Behance siempre a ancho completo, sin deformación. */
+.project-window-content.behance-project .behance-image img {
+    width: 100% !important;
+    height: auto !important;
+    object-fit: contain !important;
+}
+
+/* Visor más grande dentro de la ventana. */
+.image-viewer-image {
+    max-width: 94% !important;
+    max-height: 82% !important;
+}
+
+/* Illustration: un poco más grande, pero siempre contenida en pantalla. */
+.illustration-window {
+    width: min(820px, calc(100vw - 30px)) !important;
+    height: min(700px, calc(100vh - 45px)) !important;
+    max-width: calc(100vw - 30px) !important;
+    max-height: calc(100vh - 45px) !important;
+}
+
+/* =========================================================
+   SKETCHBOOK — LECTOR DE BITÁCORAS
+   Añadido sin modificar las reglas existentes.
+   ========================================================= */
+
+.sketchbook-window {
+    width: min(1150px, calc(100vw - 30px));
+    height: min(820px, calc(100vh - 45px));
+    min-height: 0;
+    overflow: hidden;
+}
+
+.sketchbook-content {
+    height: calc(100% - 31px);
+    min-height: 0;
+    display: grid;
+    grid-template-rows: 30px 34px minmax(0, 1fr) 27px;
+    background: #15191b;
+    color: #d5d5d5;
+    overflow: hidden;
+}
+
+.sketchbook-content .folder-header {
+    flex: 0 0 auto;
+}
+
+.sketchbook-reader {
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 20px;
+    overflow: hidden;
+}
+
+.book-page-wrap {
+    position: relative;
+    width: min(1000px, 100%);
+    height: min(650px, 100%);
+    min-height: 220px;
+    perspective: 1400px;
+}
+
+.book-page {
+    position: absolute;
+    inset: 0;
+    background: #eee;
+    border: 1px solid #777;
+    box-shadow: 8px 8px 0 rgba(0,0,0,.45), 0 0 0 1px #222;
+    overflow: hidden;
+    transform-origin: left center;
+    backface-visibility: hidden;
+}
+
+.book-page img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+    background: #eee;
+}
+
+.book-page-next {
+    z-index: 0;
+}
+
+.book-page-current {
+    z-index: 1;
+}
+
+.book-empty {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    color: #222;
+    text-align: center;
+    font-family: monospace;
+}
+
+.book-empty .folder-big-icon {
+    font-size: 52px;
+}
+
+.book-empty small {
+    color: #555;
+    font-size: 11px;
+}
+
+.page-flip-next {
+    animation: sketchbookPageNext .55s ease both;
+}
+
+.page-flip-prev {
+    animation: sketchbookPagePrev .55s ease both;
+}
+
+@keyframes sketchbookPageNext {
+    0% { transform: rotateY(0deg); }
+    45% { transform: rotateY(-88deg); }
+    100% { transform: rotateY(0deg); }
+}
+
+@keyframes sketchbookPagePrev {
+    0% { transform: rotateY(0deg); }
+    45% { transform: rotateY(88deg); }
+    100% { transform: rotateY(0deg); }
+}
+
+.book-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    flex: 0 0 34px;
+}
+
+.book-controls button {
+    width: 42px;
+    height: 28px;
+    background: #303537;
+    color: #eee;
+    border: 2px solid #777;
+    border-right-color: #111;
+    border-bottom-color: #111;
+    font-family: monospace;
+    cursor: pointer;
+}
+
+.book-controls button:hover:not(:disabled) {
+    color: #39ffb0;
+    box-shadow: inset 0 0 0 1px #39ffb0;
+}
+
+.book-controls button:disabled {
+    opacity: .35;
+    cursor: default;
+}
+
+.book-counter {
+    min-width: 70px;
+    text-align: center;
+    color: #39ffb0;
+    font-size: 12px;
+}
+
+@media (max-width: 700px) {
+    .sketchbook-window {
+        width: calc(100vw - 20px);
+        height: calc(100vh - 35px);
+    }
+
+    .sketchbook-reader {
+        padding: 12px;
+    }
+
+    .book-page-wrap {
+        height: min(480px, 100%);
+    }
+}
+/* =================================
+   FONDO DE DATOS
+   ================================= */
+
+#matrix-bg {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+
+    z-index: 0;
+    pointer-events: none;
+
+    opacity: 2;
+}
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+
+    background-image: url("images/interface/chasis.jpg");
+    background-position: center 32%;
+    background-size: 80% auto;
+    background-repeat: no-repeat;
+
+    z-index: 1;
+    pointer-events: none;
+}
+/* =========================================================
+   SKIN — VENTANAS / CHASIS
+   Apariencia industrial del sistema para integrarse con el
+   chasis de la máquina sin modificar su funcionamiento.
+   ========================================================= */
+
+.window,
+.project-window,
+.illustration-window {
+    background: #141718 !important;
+    border: 2px solid #080a0b !important;
+    border-right-color: #b89428 !important;
+    border-bottom-color: #b89428 !important;
+    box-shadow:
+        0 0 0 1px #4b3b13,
+        8px 8px 0 rgba(0, 0, 0, 0.72),
+        inset 0 0 0 1px rgba(255, 207, 57, 0.18),
+        0 0 22px rgba(0, 0, 0, 0.55) !important;
+}
+
+.title-bar {
+    position: relative;
+    height: 31px;
+    box-sizing: border-box;
+    background:
+        linear-gradient(90deg,
+            #090c0d 0%,
+            #151b1d 48%,
+            #20282a 100%) !important;
+    color: #f0df9a !important;
+    border-bottom: 2px solid #8c6e1c !important;
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.08),
+        inset 0 -1px 0 rgba(0,0,0,0.9) !important;
+    letter-spacing: 0.8px;
+}
+
+.title-bar::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 34%;
+    height: 2px;
+    background: #d92cff;
+    box-shadow: 0 0 7px rgba(217,44,255,0.28);
+    pointer-events: none;
+}
+
+.window-buttons {
+    gap: 3px;
+}
+
+.window-buttons button {
+    width: 24px;
+    height: 22px;
+    background:
+        linear-gradient(#3a4040, #1a1e1f) !important;
+    color: #d9d9d9 !important;
+    border: 1px solid #8f8f82 !important;
+    border-right-color: #080909 !important;
+    border-bottom-color: #080909 !important;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
+}
+
+.window-buttons button:hover {
+    background: linear-gradient(#555b5b, #252a2b) !important;
+    color: #ffe76a !important;
+}
+
+.window-buttons button:active {
+    border: 1px solid #080909 !important;
+    border-right-color: #8f8f82 !important;
+    border-bottom-color: #8f8f82 !important;
+}
+
+.window-content,
+.project-window-content,
+.illustration-content {
+    background:
+        linear-gradient(rgba(255,255,255,0.018), rgba(255,255,255,0.018)),
+        repeating-linear-gradient(0deg,
+            rgba(255,255,255,0.012) 0,
+            rgba(255,255,255,0.012) 1px,
+            transparent 1px,
+            transparent 4px),
+        #101415 !important;
+    color: #d5d5d0;
+}
+
+.menu-bar {
+    background:
+        linear-gradient(#202628, #111617) !important;
+    border-bottom: 1px solid #6e5b24 !important;
+    color: #bfb7a0;
+    box-shadow: inset 0 -1px 0 rgba(0,0,0,0.8);
+}
+
+.menu-bar span:hover {
+    color: #ffe45b !important;
+    text-shadow: 0 0 6px rgba(255,228,91,0.25);
+}
+
+.illustration-toolbar {
+    background:
+        linear-gradient(#1d2426, #111617) !important;
+    border-bottom: 1px solid #6e5b24 !important;
+    color: #8d887a !important;
+}
+
+.folders {
+    padding: 35px;
+}
+
+.folder,
+.project,
+.doll-image {
+    background:
+        linear-gradient(145deg, #24292a, #111516) !important;
+    border: 1px solid #665a36 !important;
+    box-shadow:
+        inset 0 0 0 1px rgba(255,211,63,0.035),
+        3px 3px 0 rgba(0,0,0,0.28);
+}
+
+.folder:hover,
+.project:hover,
+.doll-image:hover {
+    color: #ffe65c !important;
+    border-color: #d3ad32 !important;
+    box-shadow:
+        inset 0 0 0 1px rgba(255,226,80,0.2),
+        0 0 12px rgba(255,210,55,0.12),
+        3px 3px 0 rgba(0,0,0,0.3) !important;
+}
+
+.project-preview {
+    background:
+        linear-gradient(145deg, #202627, #090c0d) !important;
+    border-color: #514c39 !important;
+    color: #4cff70 !important;
+    box-shadow: inset 0 0 18px rgba(0,0,0,0.42);
+}
+
+.project-name,
+.folder-icon {
+    text-shadow: 1px 1px 0 #000;
+}
+.project-technique {
+    text-align: center;
+}
+.project-description {
+    background:
+        linear-gradient(180deg, #171c1d, #0e1213) !important;
+    border-bottom: 1px solid #6e5b24 !important;
+    box-shadow: inset 0 -1px 0 rgba(0,0,0,0.8);
+}
+
+.description-header {
+    color: #f1e6b7 !important;
+    text-shadow: 2px 2px 0 #000;
+}
+
+.description-type {
+    color: #4cff70 !important;
+}
+
+.work-status {
+    background:
+        linear-gradient(#191e1f, #0d1112) !important;
+    border-top: 1px solid #6e5b24 !important;
+    color: #77756d !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.035);
+}
+
+.project-video,
+.image-viewer-image {
+    border-color: #665a36 !important;
+}
+
+.image-viewer {
+    background: rgba(5, 8, 8, 0.96) !important;
+}
+
+.image-viewer-image {
+    box-shadow:
+        0 0 0 1px #0a0b0b,
+        0 0 0 2px #665a36,
+        0 0 25px rgba(0,0,0,0.7) !important;
+}
+
+.behance-gallery,
+.behance-image {
+    background: #090d0e !important;
+}
+
+/* =========================================================
+   CONTROLES DEL REPRODUCTOR
+   Posiciones calibradas sobre las 3 casillas moradas del chasis.
+   ========================================================= */
+
+.machine-player-controls {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    pointer-events: none;
+}
+
+.machine-player-control {
+    position: absolute;
+    display: block;
+    margin: 0;
+    padding: 0;
+    width: 1.7%;
+    height: auto;
+    background: transparent;
+    border: 0;
+    outline: none;
+    pointer-events: auto;
+    cursor: pointer;
+    transform: translate(-50%, -50%);
+    filter: none;
+    box-shadow: none;
+}
+
+.machine-player-control:hover,
+.machine-player-control:focus,
+.machine-player-control:active {
+    filter: none;
+    box-shadow: none;
+    outline: none;
+}
+
+.machine-player-control img {
+    display: block;
+    width: 100%;
+    height: auto;
+    pointer-events: none;
+    user-select: none;
+}
+
+/* Centros de las tres casillas: X/Y expresados sobre el stage 1920x1080. */
+.machine-player-prev {
+    left: 54.9%;
+    top: 63.5%;
+}
+
+.machine-player-play {
+    left: 60.7%;
+    top: 63.5%;
+}
+
+.machine-player-next {
+    left: 66.2%;
+    top: 63.5%;
+}
+
+/* El CD solo gira cuando el reproductor está en PLAY. */
+.machine-cd {
+    animation-play-state: paused;
+}
+
+.machine-player-layer.is-playing .machine-cd {
+    animation-play-state: running;
+}
+
+/* =========================================================
+   ANIMACION / FEEDBACK VISUAL DE LOS CONTROLES DEL REPRODUCTOR
+   El filtro vive en la imagen interna para evitar el titileo/repaint.
+   ========================================================= */
+
+.machine-player-control {
+    transition: transform 0.10s ease;
+}
+
+.machine-player-control img {
+    transition:
+        filter 0.12s ease,
+        opacity 0.12s ease;
+    will-change: filter, opacity;
+}
+
+.machine-player-control:hover img,
+.machine-player-control:focus-visible img {
+    filter:
+        brightness(1.28)
+        saturate(1.12)
+        drop-shadow(0 0 5px rgba(255,255,255,0.45));
+}
+
+.machine-player-control:active {
+    transform: translate(-50%, -50%) scale(0.88);
+}
+
+.machine-player-control:active img {
+    filter:
+        brightness(1.42)
+        saturate(1.15)
+        drop-shadow(0 0 7px rgba(255,255,255,0.58));
+}
+
+.machine-player-control:focus,
+.machine-player-control:focus-visible {
+    outline: none;
+}
+
+.machine-player-layer.is-playing .machine-player-play img {
+    animation: machine-player-led 1.25s ease-in-out infinite;
+}
+
+@keyframes machine-player-led {
+    0%, 100% {
+        filter:
+            brightness(1.08)
+            drop-shadow(0 0 3px rgba(255,255,255,0.30));
+    }
+    50% {
+        filter:
+            brightness(1.30)
+            drop-shadow(0 0 7px rgba(255,255,255,0.52));
+    }
+}
+
+/* =========================================================
+   CRT DE LA PANTALLA — WATER FIELD V3.3
+   Integrado dentro de la pantalla pequeña del chasis.
+   El chasis original se conserva; el PNG pantalla1.png funciona
+   como marco superior del visor.
+   ========================================================= */
+.machine-crt-screen {
+    position: fixed;
+    left: calc(10vw + (80vw * 0.086));
+    top: calc((100vh - (80vw * 0.5625)) * 0.32 + (80vw * 0.397917));
+    width: calc(80vw * 0.23);
+    height: calc(80vw * 0.099);
+    z-index: 3;
+    overflow: hidden;
+    border-radius: 0;
+    background: #020703;
+    box-shadow:
+        inset 0 0 18px rgba(0,0,0,.52),
+        inset 0 0 28px rgba(50,255,100,.08);
+    pointer-events: none;
+}
+
+#machine-crt-canvas {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.machine-crt-scanlines {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            rgba(150,255,180,.045) 0,
+            rgba(150,255,180,.045) 1px,
+            transparent 1px,
+            transparent 4px
+        ),
+        radial-gradient(
+            ellipse at center,
+            transparent 55%,
+            rgba(0,0,0,.46) 100%
+        );
+    mix-blend-mode: screen;
+}
+
+.machine-crt-noise {
+    position: absolute;
+    inset: -20%;
+    pointer-events: none;
+    opacity: .035;
+    background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.65'/%3E%3C/svg%3E");
+    animation: machine-crt-noise .16s steps(2) infinite;
+}
+
+/* Marco físico de la pantalla pequeña.
+   Coordenadas calibradas para el PSD 1920x1080:
+   X≈118  Y≈735  W≈545  H≈241.
+   El centro de pantalla1.png es transparente y deja ver el canvas. */
+.machine-crt-frame-layer {
+    position: fixed;
+    left: 10vw;
+    top: calc((100vh - (80vw * 0.5625)) * 0.32);
+    width: 80vw;
+    aspect-ratio: 16 / 9;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.machine-crt-frame {
+    position: absolute;
+    display: block;
+    left: 6.155%;
+    top: calc(68.02%);
+    width: 28.372%;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    pointer-events: none;
+    user-select: none;
+}
+
+@keyframes machine-crt-noise {
+    0% { transform: translate(0,0); }
+    25% { transform: translate(2%,-1%); }
+    50% { transform: translate(-1%,2%); }
+    75% { transform: translate(1%,1%); }
+    100% { transform: translate(0,0); }
+}
+
+
+/* =========================================================
+   SEGUNDA PANTALLA / MONITOR PASIVO
+   Se alinea con el área superior derecha del chasis 1920x1080.
+   La interfaz queda debajo de pantalla2.png, que actúa como
+   marco físico. No modifica ninguna capa existente.
+   ========================================================= */
+.machine-second-screen-stage {
+    position: fixed;
+    left: 10vw;
+    top: calc((100vh - (80vw * 0.5625)) * 0.37);
+    width: 80vw;
+    aspect-ratio: 16 / 9;
+    z-index: 4;
+    pointer-events: none;
+}
+
+.machine-second-screen-ui {
+    position: absolute;
+    left: 51.48%;
+    top: 6.4%;
+    width: 43%;
+    aspect-ratio: 897 / 441;
+    overflow: hidden;
+    border-radius: 3.5%;
+    background:
+        radial-gradient(ellipse at 50% 45%, #173d25 0%, #0c2415 52%, #06110a 100%);
+    box-shadow:
+        inset 0 0 35px rgba(0,0,0,.82),
+        0 0 18px rgba(55,255,110,.08);
+    container-type: inline-size;
+}
+
+.machine-second-screen-ui::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+        to bottom,
+        rgba(210,255,220,.035) 0 1px,
+        transparent 1px 4px
+    );
+}
+
+.machine-second-screen-ui::after {
+    content: "";
+    position: absolute;
+    inset: -4%;
+    z-index: 21;
+    pointer-events: none;
+    background: radial-gradient(
+        ellipse,
+        transparent 53%,
+        rgba(0,0,0,.68) 100%
+    );
+}
+
+.machine-second-screen-crt {
+    position: absolute;
+    inset: 11.8% 5.9% 11.3% 5.9%;
+    overflow: hidden;
+    color: #d9f7df;
+    font-family: "Courier New", monospace;
+    text-shadow: 0 0 5px rgba(130,255,160,.42);
+}
+
+.machine-second-screen-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(150,255,170,.3);
+    padding-bottom: 1.8%;
+    font-size: clamp(6px, 1.05cqw, 11px);
+    opacity: .85;
+    letter-spacing: .06em;
+    white-space: nowrap;
+}
+
+.machine-second-dot {
+    display: inline-block;
+    width: .55em;
+    height: .55em;
+    border-radius: 50%;
+    background: #bafcc8;
+    box-shadow: 0 0 5px #bafcc8;
+    vertical-align: middle;
+}
+
+.machine-second-signal {
+    display: inline-flex;
+    gap: 2px;
+    vertical-align: middle;
+}
+
+.machine-second-signal i {
+    display: block;
+    width: 3px;
+    height: 6px;
+    border: 1px solid rgba(190,255,205,.5);
+}
+
+.machine-second-signal i:nth-child(-n+3) {
+    background: rgba(190,255,205,.55);
+}
+
+.machine-second-main {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 14%;
+    bottom: 10%;
+    display: block;
+}
+
+.machine-second-monitor {
+    width: 78%;
+    height: 100%;
+    position: relative;
+}
+
+.machine-second-label {
+    margin-bottom: 2.8%;
+    font-size: clamp(6px, 1cqw, 10px);
+    opacity: .5;
+    letter-spacing: .12em;
+}
+
+#machine-second-title {
+    margin: 0 0 1.2%;
+    font-weight: 400;
+    font-family: "Courier New", monospace;
+    font-size: clamp(18px, 6.2cqw, 62px);
+    line-height: .9;
+    letter-spacing: .05em;
+    height: 11.2cqw;
+    display: flex;
+    align-items: flex-start;
+}
+
+.machine-second-rule {
+    width: 82%;
+    height: 1px;
+    margin: 0.8% 0;
+    background: rgba(170,255,185,.25);
+}
+
+.machine-second-readout {
+    font-size: clamp(7px, 1.15cqw, 11px);
+    line-height: 1.55;
+    letter-spacing: .03em;
+}
+
+.machine-second-dim { opacity: .48; }
+.machine-second-bright { opacity: .9; }
+
+.machine-second-data {
+    display: grid;
+    grid-template-columns: 88px 1fr;
+    gap: 3px 10px;
+    width: min(390px, 100%);
+    margin-top: 1.4%;
+    font-size: clamp(6px, 1cqw, 9px);
+    opacity: .72;
+}
+
+.machine-second-bar {
+    height: 5px;
+    margin-top: 2px;
+    border: 1px solid rgba(180,255,195,.35);
+}
+
+.machine-second-fill {
+    height: 100%;
+    width: 64%;
+    background: rgba(180,255,195,.42);
+}
+
+.machine-second-inhabitant {
+    position: absolute;
+    right: -27%;
+    top: 8%;
+    width: 36%;
+    height: 82%;
+    display: block;
+    z-index: 4;
+    pointer-events: none;
+    opacity: .92;
+    filter: saturate(.72) contrast(1.04);
+}
+
+.machine-second-voice {
+    min-height: 2.2em;
+    height: 2.2em;
+    margin-top: 1.4%;
+    font-size: clamp(7px, 1.1cqw, 10px);
+    line-height: 1.1;
+}
+
+.machine-second-cursor {
+    display: inline-block;
+    width: .5em;
+    height: 1em;
+    margin-left: 2px;
+    background: #bafcc8;
+    vertical-align: -.15em;
+    animation: machine-second-blink .8s steps(1) infinite;
+}
+
+@keyframes machine-second-blink { 50% { opacity: 0; } }
+
+.machine-second-footer {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid rgba(150,255,170,.25);
+    padding-top: 1.8%;
+    font-size: clamp(6px, 1cqw, 9px);
+    opacity: .8;
+    white-space: nowrap;
+}
+
+.machine-second-corner {
+    position: absolute;
+    z-index: 0;
+    font-size: clamp(5px, .8cqw, 8px);
+    opacity: .13;
+    pointer-events: none;
+}
+
+.machine-second-c1 { right: 0; top: 19%; }
+.machine-second-c2 { right: 0; bottom: 20%; }
+.machine-second-c3 { left: 0; bottom: 13%; }
+
+.machine-second-screen-frame {
+    position: absolute;
+    left: 49.48%;
+    top: 5.56%;
+    width: 46.72%;
+    height: auto;
+    display: block;
+    margin: 0;
+    padding: 0;
+    z-index: 2;
+    pointer-events: none;
+    user-select: none;
+}
+
+
+/* =========================================================
+   TOYS / VISOR 3D
+   ========================================================= */
+
+.toys-window {
+    width: 620px;
+    max-width: min(92vw, 620px);
+}
+
+.toys-3d-content {
+    min-height: 560px;
+    padding: 12px;
+    box-sizing: border-box;
+    background:
+        linear-gradient(180deg, rgba(12, 17, 15, 0.98), rgba(4, 7, 6, 0.98));
+    color: #bfffd0;
+    font-family: "Courier New", monospace;
+}
+
+.toys-3d-toolbar {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 6px 8px 8px;
+    font-size: 9px;
+    letter-spacing: 1px;
+    color: #89b999;
+    border-bottom: 1px solid rgba(100, 180, 115, 0.20);
+}
+
+.toys-3d-status {
+    white-space: nowrap;
+}
+
+.toys-online-dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin: 0 3px;
+    border-radius: 50%;
+    background: #7aff9c;
+    box-shadow: 0 0 7px rgba(122, 255, 156, 0.65);
+}
+
+.toys-3d-stage {
+    position: relative;
+    height: 390px;
+    margin-top: 10px;
+    overflow: hidden;
+    border: 1px solid rgba(114, 190, 132, 0.24);
+    background:
+        radial-gradient(circle at 50% 46%, rgba(78, 148, 88, 0.14), transparent 48%),
+        linear-gradient(180deg, rgba(6, 14, 10, 0.96), rgba(1, 4, 3, 0.99));
+}
+
+.toys-3d-stage::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 3;
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            rgba(148, 255, 160, 0.025) 0px,
+            rgba(148, 255, 160, 0.025) 1px,
+            transparent 1px,
+            transparent 4px
+        );
+    mix-blend-mode: screen;
+}
+
+.toys-3d-grid {
+    position: absolute;
+    inset: 0;
+    opacity: 0.42;
+    background-image:
+        linear-gradient(rgba(100, 170, 112, 0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(100, 170, 112, 0.07) 1px, transparent 1px);
+    background-size: 42px 42px;
+    pointer-events: none;
+}
+
+.toys-model-viewer {
+    width: 100%;
+    height: 100%;
+    display: block;
+    position: relative;
+    z-index: 2;
+    --poster-color: transparent;
+    background: transparent;
+    filter: saturate(0.94) contrast(1.04);
+}
+
+.toys-object-switcher {
+    position: absolute;
+    left: 50%;
+    bottom: 8px;
+    transform: translateX(-50%);
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.toys-object-button {
+    width: 25px;
+    height: 22px;
+    padding: 0;
+    border: 1px solid rgba(114, 190, 132, 0.28);
+    background: rgba(3, 10, 6, 0.78);
+    color: rgba(177, 243, 190, 0.72);
+    font-family: inherit;
+    font-size: 17px;
+    line-height: 18px;
+    cursor: pointer;
+}
+
+.toys-object-button:hover {
+    color: #d9ffe1;
+    border-color: rgba(133, 255, 158, 0.55);
+    background: rgba(45, 92, 55, 0.28);
+}
+
+.toys-object-indicator {
+    min-width: 34px;
+    text-align: center;
+    font-family: inherit;
+    font-size: 7px;
+    letter-spacing: 0.8px;
+    color: rgba(177, 243, 190, 0.62);
+}
+
+.toys-3d-hud {
+    position: absolute;
+    z-index: 4;
+    font-size: 7px;
+    line-height: 1.55;
+    letter-spacing: 0.8px;
+    color: rgba(177, 243, 190, 0.62);
+    pointer-events: none;
+    text-transform: uppercase;
+}
+
+.toys-hud-top-left {
+    left: 10px;
+    top: 10px;
+}
+
+.toys-hud-bottom-right {
+    right: 10px;
+    bottom: 10px;
+    text-align: right;
+}
+
+.toys-3d-info {
+    padding: 12px 4px 8px;
+    border-bottom: 1px solid rgba(100, 180, 115, 0.16);
+}
+
+.toys-3d-name {
+    font-size: 25px;
+    letter-spacing: 4px;
+    color: #d9ffe1;
+    text-shadow: 0 0 8px rgba(133, 255, 158, 0.25);
+}
+
+.toys-3d-meta {
+    margin-top: 4px;
+    font-size: 8px;
+    letter-spacing: 1.5px;
+    color: #759d7c;
+}
+
+.toys-3d-description {
+    margin-top: 7px;
+    font-size: 8px;
+    letter-spacing: 0.7px;
+    color: #98bda0;
+}
+
+.toys-3d-footer {
+    margin-top: 8px;
+    font-size: 8px;
+}
+
+
+/* =========================================================
+   PROJECT TITLES — CS VASCO + CENTRADO
+   Mantiene el ajuste anterior y centra título/subtítulo.
+   ========================================================= */
+.project-info h1 {
+    font-family: "CS Vasco Halfpixel Top", monospace !important;
+    text-align: center !important;
+}
+
+.project-info .project-type,
+.project-info .description-type,
+.project-info .project-subtitle {
+    text-align: center !important;
+}
+
+/* =========================================================
+   MY WORK — TEXTOS CENTRADOS
+   Solo afecta a la ventana MY WORK.
+   ========================================================= */
+.work-window > .title-bar > span {
+    flex: 1 1 auto;
+    text-align: center;
+}
+
+.work-window .menu-bar {
+    justify-content: center;
+    padding-left: 0;
+}
+
+.work-window .folder {
+    text-align: center;
+}
+
+.work-window .work-status {
+    justify-content: center;
+    text-align: center;
+}
+
+.work-window .work-status span {
+    text-align: center;
+}
+
+/* =========================================================
+   PROJECT SUBTITLES — CENTRADOS
+   ========================================================= */
+.project-info .description-type {
+    text-align: center !important;
+}
+
+/* =========================================================
+   FIX — PROJECT WINDOW: ONE FULL-WINDOW SCROLL
+   The project content owns the scrollbar. The video stays in
+   normal document flow, so loading YouTube pushes the gallery
+   downward instead of covering it.
+   ========================================================= */
+.project-window-content {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+}
+
+.project-window-content > .doll-gallery {
+    flex: 0 0 auto !important;
+    min-height: auto !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow-y: visible !important;
+    overflow-x: visible !important;
+}
+
+.project-window-content > .project-media-slot {
+    flex: 0 0 auto !important;
+}
+
+/* Once YouTube exists, let the video body grow with the iframe. */
+.project-video-body:has(.project-video-frame) {
+    position: static !important;
+    height: auto !important;
+    min-height: 110px !important;
+    overflow: visible !important;
+}
+
+/* The iframe participates in normal flow and therefore pushes the gallery. */
+.project-video-body .project-video-frame {
+    position: static !important;
+    width: 100% !important;
+    height: 390px !important;
+    display: block !important;
+    margin: 0 !important;
+}
+
+/* =========================================================
+   FIX — SKETCHBOOK READER
+   The reader is the middle of a 3-row layout:
+   header / reader / status. The previous 4-row definition
+   left the reader in a 34px-high row and clipped the book.
+   ========================================================= */
+.sketchbook-content {
+    grid-template-rows: 30px minmax(0, 1fr) 27px !important;
+}
+
+.sketchbook-reader {
+    min-height: 0 !important;
+    overflow: hidden !important;
+}
+
+.book-page-wrap {
+    flex: 1 1 auto !important;
+    width: min(1000px, 100%) !important;
+    height: auto !important;
+    min-height: 0 !important;
+}
+
+
+/* =========================================================
+   RESPONSIVE HORIZONTAL — JORGE.EXE
+   En pantallas pequeñas la experiencia se mantiene en
+   horizontal para conservar la composición 16:9 del chasis.
+   En vertical se muestra una pantalla de rotación.
+   ========================================================= */
+
+@media (max-width: 900px) and (orientation: landscape) {
+    :root {
+        --mobile-taskbar-height: 34px;
+        --machine-stage-width: min(95vw, calc((100vh - var(--mobile-taskbar-height) - 8px) / 0.5625));
+        --machine-stage-height: calc(var(--machine-stage-width) * 0.5625);
+        --machine-stage-top: calc((100vh - var(--mobile-taskbar-height) - var(--machine-stage-height)) / 2);
+    }
+
+    html,
+    body {
+        width: 100%;
+        height: 100%;
+        overflow: hidden !important;
+    }
+
+    body::before {
+        background-size: var(--machine-stage-width) var(--machine-stage-height) !important;
+        background-position: 50% var(--machine-stage-top) !important;
+    }
+
+    .machine-screen-shadow-layer,
+    .machine-buttons,
+    .machine-player-layer,
+    .machine-crt-frame-layer,
+    .machine-second-screen-stage {
+        left: 50% !important;
+        top: var(--machine-stage-top) !important;
+        width: var(--machine-stage-width) !important;
+        height: var(--machine-stage-height) !important;
+        transform: translateX(-50%) !important;
+    }
+
+    .machine-crt-screen {
+        left: calc(50% - (var(--machine-stage-width) / 2) + (var(--machine-stage-width) * 0.086)) !important;
+        top: calc(var(--machine-stage-top) + (var(--machine-stage-width) * 0.397917)) !important;
+        width: calc(var(--machine-stage-width) * 0.23) !important;
+        height: calc(var(--machine-stage-width) * 0.099) !important;
+    }
+
+    .window,
+    .work-window,
+    .illustration-window,
+    .project-window,
+    .sketchbook-window,
+    .about-window,
+    .contact-window,
+    .music-window,
+    .branding-window,
+    .toys-window {
+        left: 50% !important;
+        top: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        max-width: calc(100vw - 16px) !important;
+        max-height: calc(100vh - 42px) !important;
+        min-height: 0 !important;
+        box-sizing: border-box !important;
+    }
+
+    .window > .title-bar,
+    .work-window > .title-bar,
+    .illustration-window > .title-bar,
+    .project-window > .title-bar,
+    .sketchbook-window > .title-bar,
+    .about-window > .title-bar,
+    .contact-window > .title-bar,
+    .music-window > .title-bar,
+    .branding-window > .title-bar,
+    .toys-window > .title-bar {
+        min-width: 0;
+    }
+
+    .title-bar > span {
+        min-width: 0;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .window-buttons {
+        flex-shrink: 0;
+    }
+
+    /* Ventanas principales */
+    .work-window {
+        width: min(620px, calc(100vw - 16px)) !important;
+        height: min(460px, calc(100vh - 42px)) !important;
+    }
+
+    .illustration-window {
+        width: min(820px, calc(100vw - 16px)) !important;
+        height: min(700px, calc(100vh - 42px)) !important;
+    }
+
+    .project-window {
+        width: min(920px, calc(100vw - 16px)) !important;
+        height: min(720px, calc(100vh - 42px)) !important;
+    }
+
+    .sketchbook-window {
+        width: min(1150px, calc(100vw - 16px)) !important;
+        height: min(820px, calc(100vh - 42px)) !important;
+    }
+
+    .about-window {
+        width: min(600px, calc(100vw - 16px)) !important;
+        height: min(540px, calc(100vh - 42px)) !important;
+    }
+
+    .contact-window {
+        width: min(560px, calc(100vw - 16px)) !important;
+        height: min(540px, calc(100vh - 42px)) !important;
+    }
+
+    .music-window {
+        width: min(430px, calc(100vw - 16px)) !important;
+        height: min(390px, calc(100vh - 42px)) !important;
+    }
+
+    .branding-window,
+    .toys-window {
+        width: min(620px, calc(100vw - 16px)) !important;
+        height: min(620px, calc(100vh - 42px)) !important;
+    }
+
+    /* Contenidos que pueden necesitar desplazamiento */
+    .work-content,
+    .about-content,
+    .contact-content,
+    .music-content,
+    .toys-3d-content {
+        min-height: 0 !important;
+        max-height: none !important;
+    }
+
+    .work-content {
+        height: calc(100% - 31px) !important;
+        overflow: auto !important;
+    }
+
+    .about-content,
+    .contact-content,
+    .music-content,
+    .toys-3d-content {
+        height: calc(100% - 31px) !important;
+        overflow: auto !important;
+        box-sizing: border-box !important;
+    }
+
+    /* MY WORK */
+    .folders {
+        padding: 24px;
+        gap: 16px;
+    }
+
+    /* ILLUSTRATION */
+    .illustration-content > .projects {
+        padding: 18px;
+        gap: 14px;
+    }
+
+    /* PROJECT */
+    .project-window-content {
+        height: calc(100% - 31px) !important;
+        max-height: none !important;
+    }
+
+    .project-window-content > .project-media-slot,
+    .project-window-content > .project-info {
+        min-width: 0;
+    }
+
+    .project-video-body .project-video-frame {
+        width: 100% !important;
+        height: auto !important;
+        aspect-ratio: 16 / 9;
+    }
+
+    .project-window-content > .doll-gallery {
+        min-width: 0;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    /* SKETCHBOOK */
+    .sketchbook-reader {
+        padding: 12px;
+        gap: 10px;
+    }
+
+    .book-page-wrap {
+        width: min(1000px, 100%);
+        height: min(520px, 100%);
+        min-height: 0;
+    }
+
+    /* ABOUT / CONTACT */
+    .about-main,
+    .contact-main {
+        box-sizing: border-box;
+    }
+
+    /* TASKBAR */
+    .taskbar-windows {
+        min-width: 0;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scrollbar-width: thin;
+    }
+
+    .task-window {
+        flex: 0 0 auto;
+    }
+
+    .taskbar-system {
+        flex: 0 0 auto;
+        padding: 0 8px;
+    }
+}
+
+/* =========================================================
+   MÓVIL MUY ESTRECHO EN HORIZONTAL
+   ========================================================= */
+@media (max-width: 650px) and (orientation: landscape) {
+    .machine-stage,
+    .machine-player-layer,
+    .machine-buttons,
+    .machine-screen-shadow-layer,
+    .machine-crt-frame-layer,
+    .machine-second-screen-stage {
+        /* El stage ya está controlado por las variables superiores. */
+    }
+
+    .window-buttons button {
+        width: 22px;
+        height: 21px;
+    }
+
+    .project-window-content > .doll-gallery {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .folders {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        padding: 18px;
+        gap: 12px;
+    }
+
+    .folder {
+        height: 90px;
+        padding: 10px;
+    }
+
+    .folder-icon {
+        font-size: 24px;
+        line-height: 24px;
+    }
+
+    .illustration-content > .projects {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        padding: 12px;
+        gap: 10px;
+    }
+
+    .project-preview {
+        height: 110px;
+    }
+
+    .project-info {
+        padding: 16px 18px !important;
+    }
+
+    .project-info h1 {
+        font-size: 28px !important;
+        letter-spacing: 2px !important;
+    }
+}
+
+/* =========================================================
+   ORIENTACIÓN VERTICAL — PEDIR GIRAR EL DISPOSITIVO
+   Solo para móviles y tablets detectados por JS.
+   ========================================================= */
+html.jorge-landscape-required body::after {
+    content: "JORGE.EXE\A\A GIRA EL DISPOSITIVO\A\A COLOCA TU DISPOSITIVO EN HORIZONTAL" !important;
+    white-space: pre;
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 200000 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    padding: 24px !important;
+    box-sizing: border-box !important;
+    background:
+        radial-gradient(circle at center, rgba(22, 29, 31, 0.98), rgba(3, 6, 7, 0.995) 72%),
+        #050708 !important;
+    color: #f0df9a !important;
+    font-family: "Courier New", monospace !important;
+    font-size: clamp(13px, 3.8vw, 18px) !important;
+    font-weight: bold !important;
+    letter-spacing: 2px !important;
+    line-height: 1.8 !important;
+    text-shadow: 0 0 8px rgba(217, 44, 255, 0.28) !important;
+    border: 2px solid #8c6e1c !important;
+    pointer-events: auto !important;
+    box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.04),
+        inset 0 0 60px rgba(0, 0, 0, 0.75) !important;
+}
+
+/* =========================================================
+   RESPONSIVE HORIZONTAL V3 — PROJECT WINDOWS
+   Prioridad: que la obra sea visible primero.
+   Solo aplica a pantallas pequeñas en horizontal.
+   ========================================================= */
+@media (max-width: 900px) and (orientation: landscape) {
+
+    /* -----------------------------------------------------
+       PROJECT WINDOW — marco útil y compactación
+       ----------------------------------------------------- */
+    .project-window {
+        width: calc(100vw - 16px) !important;
+        height: calc(100vh - 42px) !important;
+    }
+
+    .project-window-content {
+        min-height: 0 !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+    }
+
+    /* Información superior: mucho más baja en horizontal. */
+    .project-window-content > .project-info {
+        padding: 8px 16px 7px !important;
+        min-height: 0 !important;
+    }
+
+    .project-window-content > .project-info h1,
+    .project-info h1 {
+        margin: 0 !important;
+        font-size: clamp(22px, 4vw, 32px) !important;
+        line-height: 1 !important;
+        letter-spacing: 2px !important;
+    }
+
+    .project-info .project-type,
+    .project-info .description-type,
+    .project-info .project-subtitle {
+        margin-top: 4px !important;
+        font-size: 9px !important;
+        line-height: 1.2 !important;
+    }
+
+    .project-info .project-description {
+        margin: 5px auto 0 !important;
+        max-width: 760px !important;
+        font-size: 9px !important;
+        line-height: 1.25 !important;
+    }
+
+    /* -----------------------------------------------------
+       BEHANCE / SHIROS / DOLL
+       La obra deja de crecer indefinidamente a lo ancho.
+       Cada imagen intenta caber completa en la altura útil.
+       ----------------------------------------------------- */
+    .project-window-content.behance-project > .behance-gallery {
+        width: 100% !important;
+        min-height: 0 !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        padding: 8px 12px 18px !important;
+        box-sizing: border-box !important;
+    }
+
+    .project-window-content.behance-project .behance-image {
+        width: 100% !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: flex-start !important;
+        margin: 0 0 10px !important;
+    }
+
+    .project-window-content.behance-project .behance-image img {
+        display: block !important;
+        width: 100% !important;
+        height: auto !important;
+        max-width: 100% !important;
+        max-height: none !important;
+        object-fit: contain !important;
+        margin: 0 auto !important;
+    }
+
+    /* -----------------------------------------------------
+       PROYECTOS NORMALES
+       Un poco más de área para visualizar las miniaturas.
+       ----------------------------------------------------- */
+    .project-window-content > .doll-gallery {
+        padding: 10px !important;
+        gap: 10px !important;
+    }
+
+    .project-window-content > .doll-gallery .doll-image {
+        min-height: 0 !important;
+        padding: 4px !important;
+    }
+
+    .project-window-content > .doll-gallery .doll-image img {
+        height: auto !important;
+        max-height: 42vh !important;
+        object-fit: contain !important;
+    }
+
+    /* -----------------------------------------------------
+       VIDEO
+       ----------------------------------------------------- */
+    .project-video {
+        margin: 0 10px 10px !important;
+    }
+
+    .project-video-frame {
+        width: 100% !important;
+        height: auto !important;
+        aspect-ratio: 16 / 9 !important;
+    }
+}
+
+/* =========================================================
+   HORIZONTAL MUY BAJO — teléfonos girados 320–420 px alto
+   ========================================================= */
+@media (max-width: 900px) and (orientation: landscape) and (max-height: 430px) {
+
+    .project-window-content > .project-info {
+        padding: 6px 12px 5px !important;
+    }
+
+    .project-window-content > .project-info h1,
+    .project-info h1 {
+        font-size: clamp(20px, 5vw, 28px) !important;
+    }
+
+    .project-info .project-description {
+        max-height: 28px !important;
+        overflow: hidden !important;
+        margin-top: 3px !important;
+    }
+
+    .project-window-content.behance-project > .behance-gallery {
+        padding: 6px 10px 14px !important;
+    }
+
+    .project-window-content.behance-project .behance-image img {
+        width: 100% !important;
+        max-width: 100% !important;
+        max-height: none !important;
+    }
+
+    .project-window-content > .doll-gallery {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVE HORIZONTAL V5 — PROJECT INFO SCROLLS AWAY
+   En pantallas horizontales pequeñas, el título y la descripción
+   forman parte del mismo scroll que las imágenes. Al desplazarse
+   hacia abajo, desaparecen y dejan toda la altura útil a la obra.
+   ========================================================= */
+@media (max-width: 900px) and (orientation: landscape) {
+
+    /* Un solo scroll para toda la ventana del proyecto. */
+    .project-window-content {
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        display: block !important;
+    }
+
+    /* La galería deja de ser un segundo scroll interno. */
+    .project-window-content > .behance-gallery,
+    .project-window-content > .doll-gallery {
+        overflow-y: visible !important;
+        overflow-x: visible !important;
+        height: auto !important;
+        max-height: none !important;
+        min-height: 0 !important;
+        flex: none !important;
+    }
+
+    /* La información se mantiene en el flujo y se va con el scroll. */
+    .project-window-content > .project-info {
+        position: static !important;
+        flex: none !important;
+    }
+
+    /* Behance / SHIROS / DOLL: imagen completa y ancho útil máximo. */
+    .project-window-content.behance-project .behance-image {
+        width: 100% !important;
+        margin: 0 0 10px !important;
+    }
+
+    .project-window-content.behance-project .behance-image img {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        max-height: none !important;
+        object-fit: contain !important;
+    }
+}
+
+/* =========================================================
+   RESPONSIVE HORIZONTAL V6 — TOYS / VISOR 3D
+   Prioridad: que el visor 3D ocupe el espacio útil real.
+   No modifica la estructura ni el comportamiento del model-viewer.
+   ========================================================= */
+@media (max-width: 900px) and (orientation: landscape) {
+
+    .toys-window {
+        width: calc(100vw - 16px) !important;
+        height: calc(100vh - 42px) !important;
+        max-width: none !important;
+        max-height: none !important;
+    }
+
+    .toys-3d-content {
+        height: calc(100% - 31px) !important;
+        min-height: 0 !important;
+        max-height: none !important;
+        padding: 7px 8px 0 !important;
+        overflow: hidden !important;
+        display: flex !important;
+        flex-direction: column !important;
+        box-sizing: border-box !important;
+    }
+
+    .toys-3d-toolbar {
+        flex: 0 0 auto !important;
+        min-height: 23px !important;
+        padding: 3px 6px 5px !important;
+        font-size: 8px !important;
+    }
+
+    .toys-3d-stage {
+        flex: 1 1 auto !important;
+        min-height: 0 !important;
+        height: auto !important;
+        margin-top: 6px !important;
+        margin-bottom: 3px !important;
+    }
+
+    .toys-3d-info {
+        flex: 0 0 auto !important;
+        min-height: 0 !important;
+        padding: 4px 4px 26px !important;
+        border-bottom: 0 !important;
+    }
+
+    .toys-3d-name {
+        font-size: 15px !important;
+        line-height: 1 !important;
+        letter-spacing: 2px !important;
+    }
+
+    .toys-3d-meta,
+    .toys-3d-description {
+        display: none !important;
+    }
+
+    .toys-3d-footer {
+        position: absolute !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        width: 100% !important;
+        height: 22px !important;
+        margin: 0 !important;
+        z-index: 10 !important;
+    }
+
+    .toys-hud-top-left {
+        left: 8px !important;
+        top: 8px !important;
+    }
+
+    .toys-hud-bottom-right {
+        right: 8px !important;
+        bottom: 8px !important;
+    }
+
+    .toys-object-switcher {
+        bottom: 6px !important;
+        gap: 7px !important;
+    }
+}
+
+@media (max-width: 650px) and (orientation: landscape) and (max-height: 430px) {
+    .toys-3d-content {
+        padding: 5px 6px 0 !important;
+    }
+
+    .toys-3d-toolbar {
+        min-height: 21px !important;
+        padding: 2px 5px 4px !important;
+        font-size: 7px !important;
+    }
+
+    .toys-3d-stage {
+        margin-top: 4px !important;
+    }
+
+    .toys-3d-name {
+        font-size: 13px !important;
+    }
+}
+
+/* =========================================================
+   RESPONSIVE HORIZONTAL V8 — SEGUNDA PANTALLA
+   Ajuste quirúrgico: evita que los textos del monitor reactivo
+   se monten en teléfonos pequeños girados.
+   No modifica la geometría del chasis ni el stage 16:9.
+   ========================================================= */
+@media (max-width: 900px) and (orientation: landscape) and (max-height: 430px) {
+
+    .machine-second-screen-crt {
+        inset: 10% 5.9% 8% 5.9% !important;
+    }
+
+    .machine-second-main {
+        top: 12% !important;
+        bottom: 17% !important;
+    }
+
+    .machine-second-label {
+        margin-bottom: 1.4% !important;
+        font-size: clamp(5px, 0.85cqw, 8px) !important;
+    }
+
+    #machine-second-title {
+        margin-bottom: 0.6% !important;
+        font-size: clamp(15px, 5.1cqw, 32px) !important;
+        line-height: 0.82 !important;
+        height: 9.5cqw !important;
+    }
+
+    .machine-second-rule {
+        margin: 0.5% 0 !important;
+    }
+
+    .machine-second-readout {
+        font-size: clamp(5.4px, 0.9cqw, 8px) !important;
+        line-height: 1.2 !important;
+    }
+
+    .machine-second-data {
+        grid-template-columns: 60px 1fr !important;
+        gap: 1px 6px !important;
+        margin-top: 0.8% !important;
+        font-size: clamp(5px, 0.75cqw, 7px) !important;
+    }
+
+    .machine-second-bar {
+        height: 3px !important;
+        margin-top: 1px !important;
+    }
+
+    .machine-second-voice {
+        min-height: 1.6em !important;
+        height: 1.6em !important;
+        margin-top: 0.6% !important;
+        font-size: clamp(5.5px, 0.85cqw, 8px) !important;
+        line-height: 1 !important;
+    }
+
+    .machine-second-footer {
+        padding-top: 1.2% !important;
+        font-size: clamp(5px, 0.75cqw, 7px) !important;
+    }
+}
+
+/* =========================================================
+   RESPONSIVE HORIZONTAL V9 — TOYS / POSITION
+   Solo eleva un poco la ventana para que la información inferior
+   quede fuera de la zona cubierta por la taskbar.
+   No modifica el chasis ni el tamaño del visor.
+   ========================================================= */
+@media (max-width: 900px) and (orientation: landscape) {
+    .toys-window {
+        top: calc(50% - 14px) !important;
+    }
+}
+
+/* =========================================================
+   RESPONSIVE HORIZONTAL V12 — SEGUNDA PANTALLA / TEXTO INFERIOR
+   Ajuste quirúrgico sobre V11.
+   Reduce el bloque inferior y le da un poco más de aire vertical
+   para evitar cualquier superposición entre datos, voz y footer.
+   No modifica el chasis ni la posición física de la pantalla.
+   ========================================================= */
+@media (max-width: 900px) and (orientation: landscape) and (max-height: 430px) {
+
+    .machine-second-main {
+        top: 10% !important;
+        bottom: 11% !important;
+    }
+
+    .machine-second-monitor {
+        width: 84% !important;
+    }
+
+    .machine-second-label {
+        margin-bottom: 0.7% !important;
+        font-size: clamp(5px, 0.80cqw, 8px) !important;
+    }
+
+    #machine-second-title {
+        margin: 0 0 0.3% !important;
+        font-size: clamp(14px, 4.8cqw, 30px) !important;
+        line-height: 0.82 !important;
+        height: 8.2cqw !important;
+    }
+
+    .machine-second-rule {
+        margin: 0.25% 0 !important;
+    }
+
+    .machine-second-readout {
+        font-size: clamp(5px, 0.80cqw, 7px) !important;
+        line-height: 1.05 !important;
+    }
+
+    .machine-second-data {
+        grid-template-columns: 55px 1fr !important;
+        gap: 0.5px 5px !important;
+        margin-top: 0.5% !important;
+        font-size: clamp(4.8px, 0.68cqw, 6.5px) !important;
+    }
+
+    .machine-second-bar {
+        height: 2px !important;
+        margin-top: 0 !important;
+    }
+
+    .machine-second-voice {
+        min-height: 1.25em !important;
+        height: 1.25em !important;
+        margin-top: 0.35% !important;
+        font-size: clamp(5px, 0.75cqw, 7px) !important;
+        line-height: 0.95 !important;
+    }
+
+    .machine-second-footer {
+        padding-top: 0.8% !important;
+        font-size: clamp(4.5px, 0.68cqw, 6.5px) !important;
+    }
+}
+
+/* =========================================================
+   RESPONSIVE HORIZONTAL V13 — DESCRIPCIONES DE PROYECTOS
+   Recupera aire y legibilidad sin cambiar la estructura del visor.
+   ========================================================= */
+@media (max-width: 900px) and (orientation: landscape) {
+    .project-info .project-description {
+        margin: 6px auto 0 !important;
+        max-width: min(860px, 100%) !important;
+        font-size: 10px !important;
+        line-height: 1.35 !important;
+        letter-spacing: 0 !important;
+        white-space: normal !important;
+        overflow-wrap: break-word !important;
+    }
+}
+
+@media (max-width: 900px) and (orientation: landscape) and (max-height: 430px) {
+    .project-info .project-description {
+        max-height: 34px !important;
+        font-size: 9.5px !important;
+        line-height: 1.35 !important;
+        margin-top: 4px !important;
+    }
+}
+
+/* =========================================================
+   RESPONSIVE HORIZONTAL V14 — DESCRIPCIONES DE PROYECTOS
+   La descripción no se recorta: conserva altura automática y
+   puede ocupar las líneas necesarias antes de la galería.
+   ========================================================= */
+@media (max-width: 900px) and (orientation: landscape) {
+    .project-info .project-description {
+        height: auto !important;
+        min-height: 0 !important;
+        max-height: none !important;
+        margin: 5px auto 0 !important;
+        padding: 6px 12px 7px !important;
+        font-size: 9.5px !important;
+        line-height: 1.35 !important;
+        letter-spacing: 0 !important;
+        white-space: normal !important;
+        overflow: visible !important;
+        overflow-wrap: break-word !important;
+        box-sizing: border-box !important;
+    }
+}
+
+@media (max-width: 900px) and (orientation: landscape) and (max-height: 430px) {
+    .project-info .project-description {
+        padding: 5px 10px 6px !important;
+        font-size: 9px !important;
+        line-height: 1.35 !important;
+        max-height: none !important;
+    }
+}

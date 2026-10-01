@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Jorge Luna — Portfolio</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <canvas id="matrix-bg"></canvas>
+
+    <!-- =====================================================
+         SEGUNDA PANTALLA / MONITOR PASIVO
+         La UI observa la actividad de la máquina. No es un menú.
+         pantalla2.png funciona como la carcasa física superior.
+         ===================================================== -->
+    <div class="machine-second-screen-stage" aria-hidden="true">
+        <div class="machine-second-screen-ui">
+            <div class="machine-second-screen-crt">
+                <div class="machine-second-screen-header">
+                    <span>SISTEMA DEL APARATO // MONITOR 01</span>
+                    <span>ENLACE <span class="machine-second-dot"></span> <span class="machine-second-signal"><i></i><i></i><i></i><i></i></span></span>
+                </div>
+
+                <div class="machine-second-corner machine-second-c1">CANAL DE ENTRADA // EXTERNO</div>
+                <div class="machine-second-corner machine-second-c2">ARCHIVO // MEMORIA LOCAL</div>
+                <div class="machine-second-corner machine-second-c3">MODO DE OBSERVACIÓN</div>
+
+                <main class="machine-second-main">
+                    <section class="machine-second-monitor">
+                        <div class="machine-second-label" id="machine-second-label">MONITOR DEL SISTEMA // OBSERVACIÓN PASIVA</div>
+                        <h1 id="machine-second-title">SISTEMA<br>ACTIVO</h1>
+                        <div class="machine-second-rule"></div>
+                        <div class="machine-second-readout" id="machine-second-readout">
+                            <span class="machine-second-dim">ESTADO:</span> ACTIVO<br>
+                            <span class="machine-second-dim">ENTRADA:</span> NINGUNA<br>
+                            <span class="machine-second-dim">SEÑAL:</span> ESTABLE
+                        </div>
+
+                        <div class="machine-second-data">
+                            <span>ENERGÍA DEL SISTEMA</span><span><div class="machine-second-bar"><div class="machine-second-fill" id="machine-second-energy"></div></div></span>
+                            <span>MEMORIA</span><span><div class="machine-second-bar"><div class="machine-second-fill" style="width:72%"></div></div></span>
+                            <span>ORGANISMO</span><span class="machine-second-bright" id="machine-second-organism">RESPONDIENDO</span>
+                        </div>
+
+                        <div class="machine-second-voice" id="machine-second-voice">Esperando una entrada...<span class="machine-second-cursor"></span></div>
+
+                        <!-- Habitante del monitor: generado y animado por JavaScript. -->
+                        <canvas id="machine-second-inhabitant" aria-hidden="true"></canvas>
+                    </section>
+                </main>
+
+                <div class="machine-second-footer">
+                    <span id="machine-second-state">ESTADO: EN ESPERA</span>
+                    <span id="machine-second-time">00:00:00</span>
+                    <span>NO DESCONECTAR</span>
+                </div>
+            </div>
+        </div>
+
+        <img class="machine-second-screen-frame" src="images/interface/pantalla2.png" alt="">
+    </div>
+
+    <!-- =====================================================
+         CRT / VISUALIZADOR DE LA PANTALLA
+         La geometría V3.3 vive dentro del display de la máquina.
+         ===================================================== -->
+    <div class="machine-crt-screen" aria-hidden="true">
+        <canvas id="machine-crt-canvas"></canvas>
+        <div class="machine-crt-scanlines"></div>
+        <div class="machine-crt-noise"></div>
+    </div>
+
+    <div class="machine-crt-frame-layer" aria-hidden="true">
+        <img
+            class="machine-crt-frame"
+            src="images/interface/pantalla1.png"
+            alt=""
+        >
+    </div>
+
+    <audio id="machine-audio" src="NU 3 inst.wav" preload="auto"></audio>
+
+    <!-- =====================================================
+         SOMBRA DE LA PANTALLA
+         Capa superior para que las animaciones queden debajo.
+         ===================================================== -->
+    
+
+    <!-- =====================================================
+         CAPA DE BOTONES DEL CHASIS
+         Cada botón abre una sección independiente.
+         ===================================================== -->
+    <div class="machine-buttons">
+
+        <button class="machine-button machine-button-1" type="button" aria-label="Abrir My Work">
+            <img src="images/interface/Botones/Boton-1.png" alt="">
+        </button>
+
+        <button class="machine-button machine-button-2" type="button" aria-label="Abrir About">
+            <img src="images/interface/Botones/Boton-2.png" alt="">
+        </button>
+
+        <button class="machine-button machine-button-3" type="button" aria-label="Abrir Toys">
+            <img src="images/interface/Botones/Boton-3.png" alt="">
+        </button>
+
+        <button class="machine-button machine-button-4" type="button" aria-label="Abrir Contact">
+            <img src="images/interface/Botones/Boton-4.png" alt="">
+        </button>
+
+    </div>
+
+    <!-- =====================================================
+         REPRODUCTOR / CD
+         El reproductor y el CD se posicionan sobre el chasis
+         usando las coordenadas del PSD 1920x1080.
+         ===================================================== -->
+    <div class="machine-player-layer">
+
+        <img
+            class="machine-cd"
+            src="images/interface/Reproductor/CD.png"
+            alt=""
+        >
+
+        <img
+            class="machine-player"
+            src="images/interface/Reproductor/Reproductor.png"
+            alt=""
+        >
+
+        <div class="machine-player-controls" aria-label="Controles del reproductor">
+            <button class="machine-player-control machine-player-prev" type="button" aria-label="Canción anterior">
+                <img src="images/interface/Reproductor/prev.png" alt="">
+            </button>
+
+            <button class="machine-player-control machine-player-play" type="button" aria-label="Reproducir">
+                <img src="images/interface/Reproductor/play.png" alt="">
+            </button>
+
+            <button class="machine-player-control machine-player-next" type="button" aria-label="Siguiente canción">
+                <img src="images/interface/Reproductor/next.png" alt="">
+            </button>
+        </div>
+
+    </div>
+
+    <!-- =====================================================
+     TASKBAR
+     ===================================================== -->
+<div class="taskbar">
+
+   <button class="start-button" onclick="location.reload()">
+    <span class="start-icon">▣</span>
+    REINICIAR
+</button>
+
+    <div class="taskbar-windows"></div>
+
+    <div class="taskbar-system">
+
+        <span class="system-led"></span>
+
+        <span>EN LINEA</span>
+
+        <span class="system-time" id="system-time">
+            00:00
+        </span>
+
+    </div>
+
+</div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
