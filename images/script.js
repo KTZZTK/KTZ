@@ -1,4 +1,36 @@
 // =========================================================
+// JORGE.EXE — DETECCIÓN DE DISPOSITIVO Y ORIENTACIÓN
+// En móviles y tablets se requiere orientación horizontal.
+// En PC de escritorio no se muestra este aviso.
+// =========================================================
+(() => {
+    const esDispositivoNoPC = () => {
+        const ua = navigator.userAgent || "";
+        const uaDataMobile = Boolean(navigator.userAgentData?.mobile);
+        const mobilePattern = /Android|iPhone|iPad|iPod|Windows Phone|webOS|BlackBerry|IEMobile|Opera Mini|Mobile/i;
+        const esIPadOS = navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1;
+        const esTabletTactil = navigator.maxTouchPoints > 1 && Math.min(screen.width, screen.height) <= 1200;
+
+        return uaDataMobile || mobilePattern.test(ua) || esIPadOS || esTabletTactil;
+    };
+
+    const actualizarOrientacion = () => {
+        const requiereHorizontal =
+            esDispositivoNoPC() &&
+            window.matchMedia("(orientation: portrait)").matches;
+
+        document.documentElement.classList.toggle(
+            "jorge-landscape-required",
+            requiereHorizontal
+        );
+    };
+
+    actualizarOrientacion();
+    window.addEventListener("resize", actualizarOrientacion, { passive: true });
+    window.addEventListener("orientationchange", actualizarOrientacion, { passive: true });
+})();
+
+// =========================================================
 // JORGE.EXE — SISTEMA DE VENTANAS
 // =========================================================
 
@@ -11,23 +43,30 @@ function hacerMovible(ventana, barra) {
     let moviendo = false;
     let offsetX = 0;
     let offsetY = 0;
+    let pointerIdActivo = null;
 
-    // Evitar arrastres nativos o selección de texto
+    // Evitar arrastres nativos, selección de texto y scroll táctil
+    // mientras el usuario toma la barra de título.
     barra.ondragstart = () => false;
+    barra.style.touchAction = "none";
 
-    barra.addEventListener("mousedown", (e) => {
+    barra.addEventListener("pointerdown", (e) => {
 
-        // Los botones de cerrar/minimizar NO arrastran la ventana
+        // Los botones de cerrar/minimizar NO arrastran la ventana.
         if (e.target.closest("button")) return;
+
+        // Con mouse, solo arrastramos con el botón izquierdo.
+        if (e.pointerType === "mouse" && e.button !== 0) return;
 
         e.preventDefault();
         e.stopPropagation();
 
         moviendo = true;
+        pointerIdActivo = e.pointerId;
 
         const rect = ventana.getBoundingClientRect();
 
-        // Convertir la posición actual a coordenadas absolutas
+        // Convertir la posición actual a coordenadas absolutas.
         ventana.style.setProperty("transform", "none", "important");
         ventana.style.setProperty("left", rect.left + "px", "important");
         ventana.style.setProperty("top", rect.top + "px", "important");
@@ -39,12 +78,18 @@ function hacerMovible(ventana, barra) {
 
         barra.style.userSelect = "none";
         document.body.style.userSelect = "none";
-        document.body.style.cursor = "grabbing";
+        document.body.style.cursor = e.pointerType === "touch" ? "grabbing" : "grabbing";
+
+        if (barra.setPointerCapture) {
+            try {
+                barra.setPointerCapture(e.pointerId);
+            } catch (_) {}
+        }
     });
 
-    document.addEventListener("mousemove", (e) => {
+    document.addEventListener("pointermove", (e) => {
 
-        if (!moviendo) return;
+        if (!moviendo || e.pointerId !== pointerIdActivo) return;
 
         e.preventDefault();
 
@@ -59,18 +104,23 @@ function hacerMovible(ventana, barra) {
             (e.clientY - offsetY) + "px",
             "important"
         );
-    });
+    }, { passive: false });
 
-    document.addEventListener("mouseup", () => {
+    const terminarMovimiento = (e) => {
 
         if (!moviendo) return;
+        if (e && e.pointerId !== pointerIdActivo) return;
 
         moviendo = false;
+        pointerIdActivo = null;
 
         barra.style.userSelect = "";
         document.body.style.userSelect = "";
         document.body.style.cursor = "";
-    });
+    };
+
+    document.addEventListener("pointerup", terminarMovimiento);
+    document.addEventListener("pointercancel", terminarMovimiento);
 }
 
 
@@ -160,7 +210,7 @@ function abrirMyWork() {
 
                 <span>02 DIRECTORIES</span>
 
-                <span>SYSTEM: ONLINE</span>
+                <span>SISTEMA: EN LINEA</span>
 
             </div>
 
@@ -1110,7 +1160,7 @@ ventana.style.zIndex = obtenerSiguienteZ();
 
             <div class="work-status">
                 <span>SKETCHBOOK</span>
-                <span>PAGE SYSTEM: READY</span>
+                <span>SISTEMA: LISTO</span>
             </div>
         </div>
     `;
@@ -1402,7 +1452,7 @@ function abrirBranding() {
 
                 <span>0 FILES</span>
 
-                <span>SYSTEM: ONLINE</span>
+                <span>SISTEMA: EN LINEA</span>
 
             </div>
 
@@ -1535,7 +1585,7 @@ function abrirToys() {
             <div class="work-status toys-3d-footer">
 
                 <span>10 OBJETOS</span>
-                <span>SISTEMA: ONLINE</span>
+                <span>SISTEMA: EN LINEA</span>
 
             </div>
 
@@ -1996,7 +2046,10 @@ function abrirAbout() {
 
                     <div class="about-avatar">
 
-                        JL
+                        <img
+                            src="images/about-profile.jpg"
+                            alt="Perfil de Jorge Luna"
+                        >
 
                     </div>
 
@@ -2009,9 +2062,9 @@ function abrirAbout() {
 
                         <div class="about-role">
 
-                            ILLUSTRATOR /
-                            DESIGNER /
-                            MUSICIAN
+                            ILUSTRADOR /
+                            DISEÑADOR /
+                            MÚSICO
 
                         </div>
 
@@ -2027,21 +2080,21 @@ function abrirAbout() {
 
                     <p>
 
-                        Graphic designer, illustrator
-                        and musician interested in
-                        visual identity, image-making,
-                        motion and sound.
+                        Soy diseñador gráfico, ilustrador y
+                        músico. Desarrollo proyectos que
+                        combinan ilustración, identidad visual,
+                        imagen, movimiento y sonido.
 
                     </p>
 
 
                     <p>
 
-                        My work moves between
-                        illustration, design and
-                        experimentation, looking for
-                        connections between visual
-                        language, music and narrative.
+                        Mi trabajo se mueve entre la creación
+                        visual y la experimentación, explorando
+                        relaciones entre imagen, música y
+                        narrativa para construir piezas con
+                        una identidad propia.
 
                     </p>
 
@@ -2052,23 +2105,15 @@ function abrirAbout() {
 
                     <div>
 
-                        <span>STATUS</span>
-                        <strong>AVAILABLE</strong>
+                        <span>ESTADO</span>
+                        <strong>DISPONIBLE</strong>
 
                     </div>
 
 
                     <div>
 
-                        <span>SYSTEM</span>
-                        <strong>JORGE.EXE</strong>
-
-                    </div>
-
-
-                    <div>
-
-                        <span>LOCATION</span>
+                        <span>UBICACIÓN</span>
                         <strong>BOGOTÁ / COLOMBIA</strong>
 
                     </div>
@@ -2080,9 +2125,9 @@ function abrirAbout() {
 
             <div class="work-status">
 
-                <span>USER PROFILE</span>
+                <span>PERFIL DE USUARIO</span>
 
-                <span>SYSTEM: ONLINE</span>
+                <span>SISTEMA: EN LÍNEA</span>
 
             </div>
 
@@ -2165,21 +2210,21 @@ window.abrirContact = function abrirContact() {
 
                 <div class="contact-title">
 
-                    ESTABLISH CONNECTION
+                    ESTABLECER CONEXIÓN
 
                 </div>
 
 
                 <div class="contact-subtitle">
 
-                    SELECT A COMMUNICATION CHANNEL
+                    SELECCIONA UN CANAL DE COMUNICACIÓN
 
                 </div>
 
 
                 <div class="contact-list">
 
-                    <a href="#" class="contact-item">
+                    <a href="mailto:ktzcontacto@gmail.com" class="contact-item">
 
                         <span class="contact-icon">
                             @
@@ -2187,10 +2232,10 @@ window.abrirContact = function abrirContact() {
 
                         <span>
 
-                            <small>EMAIL</small>
+                            <small>CORREO</small>
 
                             <strong>
-                                YOUR EMAIL HERE
+                                ktzcontacto@gmail.com
                             </strong>
 
                         </span>
@@ -2198,7 +2243,12 @@ window.abrirContact = function abrirContact() {
                     </a>
 
 
-                    <a href="#" class="contact-item">
+                    <a
+                        href="https://wa.me/573185276835"
+                        class="contact-item"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
 
                         <span class="contact-icon">
                             ◎
@@ -2206,29 +2256,10 @@ window.abrirContact = function abrirContact() {
 
                         <span>
 
-                            <small>INSTAGRAM</small>
+                            <small>WHATSAPP</small>
 
                             <strong>
-                                YOUR INSTAGRAM
-                            </strong>
-
-                        </span>
-
-                    </a>
-
-
-                    <a href="#" class="contact-item">
-
-                        <span class="contact-icon">
-                            ◈
-                        </span>
-
-                        <span>
-
-                            <small>PORTFOLIO</small>
-
-                            <strong>
-                                ONLINE
+                                +57 318 5276835
                             </strong>
 
                         </span>
@@ -2238,10 +2269,65 @@ window.abrirContact = function abrirContact() {
                 </div>
 
 
+                <div class="contact-software">
+
+                    <div class="contact-section-label">
+                        SOFTWARE / PROCESOS
+                    </div>
+
+                    <div class="contact-software-grid">
+
+                        <div class="contact-software-item">
+                            <span>[PS]</span>
+                            <strong>PHOTOSHOP</strong>
+                            <em>90%</em>
+                        </div>
+
+                        <div class="contact-software-item">
+                            <span>[AI]</span>
+                            <strong>ILLUSTRATOR</strong>
+                            <em>90%</em>
+                        </div>
+
+                        <div class="contact-software-item">
+                            <span>[AE]</span>
+                            <strong>AFTER EFFECTS</strong>
+                            <em>90%</em>
+                        </div>
+
+                        <div class="contact-software-item">
+                            <span>[PR]</span>
+                            <strong>PREMIERE PRO</strong>
+                            <em>90%</em>
+                        </div>
+
+                        <div class="contact-software-item">
+                            <span>[ID]</span>
+                            <strong>INDESIGN</strong>
+                            <em>90%</em>
+                        </div>
+
+                        <div class="contact-software-item">
+                            <span>[FL]</span>
+                            <strong>FL STUDIO</strong>
+                            <em>90%</em>
+                        </div>
+
+                        <div class="contact-software-item contact-software-wide">
+                            <span>[AI]</span>
+                            <strong>INTEGRACIÓN DE IA EN PROCESOS WEB</strong>
+                            <em>APLICADO</em>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
                 <div class="contact-message">
 
-                    OPEN FOR COLLABORATIONS,
-                    COMMISSIONS AND CREATIVE PROJECTS.
+                    ABIERTO A COLABORACIONES,
+                    COMISIONES Y PROYECTOS CREATIVOS.
 
                 </div>
 
@@ -2250,9 +2336,9 @@ window.abrirContact = function abrirContact() {
 
             <div class="work-status">
 
-                <span>CONNECTION READY</span>
+                <span>CONEXIÓN LISTA</span>
 
-                <span>PORT: 443</span>
+                <span>PUERTO: 443</span>
 
             </div>
 
@@ -2385,37 +2471,21 @@ const tocarHastaElAsco = [
 ];
 
 const projectData = {
+
     dolls: {
         title: "DOLL SERIES",
-        technique: "DIGITAL ILLUSTRATION",
-        description: "A series of illustrated characters exploring identity, fantasy and visual experimentation through hand-drawn textures and retro pop aesthetics.",
+        technique: "ILUSTRACIÓN ANÁLOGA Y DIGITAL",
+        description: "Este proyecto combina técnicas tradicionales de dibujo con lápices de color, esferos y marcadores, posteriormente retocadas y refinadas de manera digital en Adobe Photoshop.",
         path: "DOLLS",
         layout: "behance",
         images: dolls
     },
 
-    bat: {
-        title: "BAT",
-        technique: "DIGITAL ILLUSTRATION",
-        description: "PROJECT DESCRIPTION PENDING",
-        path: "BAT",
-        layout: "grid",
-        images: bat
-    },
-
-    casino: {
-        title: "CASINO WALLPAPER SERIES",
-        technique: "DIGITAL ILLUSTRATION",
-        description: "A series of digital illustrations created as wallpapers for an online casino, exploring surreal characters, playful compositions and retro-inspired aesthetics.",
-        path: "CASINO",
-        layout: "grid",
-        images: casino
-    },
 
     enigma: {
         title: "ENIGMA BEAT TAPE",
-        technique: "MUSIC / VISUAL",
-        description: "A beat tape accompanied by an audiovisual piece. The visual will be connected here through a lightweight video player.",
+        technique: "ILUSTRACIÓN ANÁLOGA Y DIGITAL / PRODUCCIÓN MUSICAL",
+        description: "Proyecto de beats de estilo boom bap inspirado en el carácter enigmático de la noche y construido desde una exploración visual influenciada por las estéticas de las caricaturas clásicas, como La Pantera Rosa y El Inspector. El proyecto propone una exploración conceptual y sonora dentro de una propuesta artística multidisciplinaria.",
         path: "ENIGMA (BEAT TAPE)",
         layout: "grid",
         images: enigma,
@@ -2425,10 +2495,21 @@ const projectData = {
         videoUrl: "https://www.youtube.com/watch?v=-TeD7sVrbN4"
     },
 
+
+    shiros: {
+        title: "SHIROS",
+        technique: "ILUSTRACIÓN DIGITAL",
+        description: "",
+        path: "SHIROS",
+        layout: "behance",
+        images: shiros
+    },
+
+
     caer: {
         title: "CAER CON CALMA",
-        technique: "MOTION / VISUAL",
-        description: "PROJECT DESCRIPTION PENDING",
+        technique: "ILUSTRACIÓN ANÁLOGA Y DIGITAL / PRODUCCIÓN MUSICAL",
+        description: "Proyecto de beats de estilo chill enfocado en la creación de atmósferas relajadas, cálidas e introspectivas. Una exploración de ritmo, textura y sampleo orientada a construir una experiencia sonora tranquila y envolvente.",
         path: "CAER CON CALMA",
         layout: "grid",
         images: caerConCalma,
@@ -2438,50 +2519,66 @@ const projectData = {
         videoUrl: "https://www.youtube.com/watch?v=f-mpQRB9FeM"
     },
 
-    shiros: {
-        title: "SHIROS",
-        technique: "DIGITAL ILLUSTRATION",
-        description: "A vertical visual series designed to be experienced as a continuous scrolling piece.",
-        path: "SHIROS",
-        layout: "behance",
-        images: shiros
+
+    casino: {
+        title: "CASINO WALLPAPER SERIES",
+        technique: "ILUSTRACIÓN ANÁLOGA Y DIGITAL",
+        description: "Serie de ilustraciones digitales desarrolladas como fondos de pantalla para un casino en línea. El proyecto explora personajes surrealistas, composiciones dinámicas y una estética con referencias visuales retro.",
+        path: "CASINO",
+        layout: "grid",
+        images: casino
     },
+
 
     conjuro: {
         title: "CONJURO",
-        technique: "DIGITAL ILLUSTRATION",
-        description: "PROJECT DESCRIPTION PENDING",
+        technique: "ILUSTRACIÓN DIGITAL",
+        description: "Exploraciones visuales que combinan técnicas tradicionales y digitales como parte de un proceso de experimentación y aprendizaje, orientado a desarrollar y perfeccionar mis habilidades de representación, composición y creación de imágenes.",
         path: "CONJURO",
         layout: "grid",
         images: conjuro
     },
 
+
     error: {
         title: "ERROR DEL SISTEMA",
-        technique: "DIGITAL ART",
-        description: "PROJECT DESCRIPTION PENDING",
+        technique: "ILUSTRACIÓN DIGITAL",
+        description: "Exploraciones visuales que combinan técnicas tradicionales y digitales como parte de un proceso de experimentación y aprendizaje, orientado a desarrollar y perfeccionar mis habilidades de representación, composición y creación de imágenes.",
         path: "ERROR DEL SISTEMA",
         layout: "grid",
         images: errorSistema
     },
 
+
     desamor: {
         title: "DESAMOR",
-        technique: "DIGITAL ILLUSTRATION",
-        description: "PROJECT DESCRIPTION PENDING",
+        technique: "ILUSTRACIÓN ANÁLOGA Y DIGITAL",
+        description: "Exploraciones visuales que combinan técnicas tradicionales y digitales como parte de un proceso de experimentación y aprendizaje, orientado a desarrollar y perfeccionar mis habilidades de representación, composición y creación de imágenes.",
         path: "DESAMOR",
         layout: "grid",
         images: desamor
     },
 
+
+    bat: {
+        title: "BAT",
+        technique: "ILUSTRACIÓN ANÁLOGA Y DIGITAL",
+        description: "Exploraciones visuales que combinan técnicas tradicionales y digitales como parte de un proceso de experimentación y aprendizaje, orientado a desarrollar y perfeccionar mis habilidades de representación, composición y creación de imágenes.",
+        path: "BAT",
+        layout: "grid",
+        images: bat
+    },
+
+
     tocar: {
         title: "TOCAR HASTA EL ASCO",
-        technique: "DIGITAL ILLUSTRATION",
-        description: "PROJECT DESCRIPTION PENDING",
+        technique: "ILUSTRACIÓN ANÁLOGA Y DIGITAL",
+        description: "Exploraciones visuales que combinan técnicas tradicionales y digitales como parte de un proceso de experimentación y aprendizaje, orientado a desarrollar y perfeccionar mis habilidades de representación, composición y creación de imágenes.",
         path: "TOCAR HASTA EL ASCO",
         layout: "grid",
         images: tocarHastaElAsco
     }
+
 };
 
 let proyectoActual = null;
@@ -2774,6 +2871,9 @@ const machinePlayerPlayImage = machinePlayerPlay
     : null;
 const machineCd = document.querySelector(".machine-cd");
 const machineAudio = document.getElementById("machine-audio");
+if (machineAudio) {
+    machineAudio.autoplay = true;
+}
 
 // Audio independiente para la ventana MUSIC.
 // machineAudio queda reservado para el reproductor físico / CRT.
@@ -3945,14 +4045,17 @@ if (document.readyState === "complete") {
     window.addEventListener("load", intentarAutoplayMachineAudio, { once: true });
 }
 
-// Fallback silencioso: si el navegador bloqueó el autoplay, el primer gesto
-// del usuario puede desbloquearlo sin cambiar ningún control existente.
+// Fallback silencioso: si el navegador bloqueó el autoplay, cualquier gesto
+// posterior del usuario puede desbloquearlo sin cambiar ningún control existente.
+// El listener permanece activo hasta que el audio realmente arranca; esto evita
+// perder el primer gesto si la promesa de autoplay se resuelve un poco después.
 const desbloquearAutoplayMachine = () => {
     if (!machineAutoplayBlocked || machineAutoplayStarted) return;
     intentarAutoplayMachineAudio();
 };
-document.addEventListener("pointerdown", desbloquearAutoplayMachine, { once: true, passive: true });
-document.addEventListener("keydown", desbloquearAutoplayMachine, { once: true });
+document.addEventListener("pointerdown", desbloquearAutoplayMachine, { passive: true });
+document.addEventListener("keydown", desbloquearAutoplayMachine);
+document.addEventListener("touchstart", desbloquearAutoplayMachine, { passive: true });
 
 // El organismo comienza a respirar inmediatamente al cargar la página.
 if (!machineCrtRaf) {
